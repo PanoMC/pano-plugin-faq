@@ -125,7 +125,7 @@ override suspend fun onUninstall() {
     - `@DBEntity`: For data models.
     - `@Migration`: For versioned DB changes.
     - `@Dao`: For DAO implementations.
-- **Naming Convention**: Keep **DAO** and **Model** names as close as possible (e.g., `AnnouncementModel` and `AnnouncementDao`), as the model name is automatically converted into the database table name.
+- **Naming Convention**: Keep **DAO** and **Model** names as close as possible (e.g., `FAQModel` and `FAQDao`), as the model name is automatically converted into the database table name.
 - **Implementation**: Extend abstract Dao classes and provide the model class. Ensure `uninstall` logic is implemented.
 
 ### 🛣️ API & Routing
@@ -150,12 +150,12 @@ override suspend fun onUninstall() {
 - **Annotation**: `@PermissionDefinition`.
 - **Implementation Rules**:
     - **Icon**: You **must** provide a FontAwesome icon name to the `PanelPermission` constructor (e.g., `PanelPermission("fa-bullhorn")`).
-    - **Node**: Define the unique permission node string in the `@PermissionDefinition` annotation (e.g., `@PermissionDefinition("pano.plugin.announcement.manage")`).
+    - **Node**: Define the unique permission node string in the `@PermissionDefinition` annotation (e.g., `@PermissionDefinition("pano.plugin.faq.manage")`).
 
 **Permission Definition Example:**
 ```kotlin
-@PermissionDefinition("pano.plugin.announcement.manage")
-class ManageAnnouncementsPermission : PanelPermission("fa-bullhorn")
+@PermissionDefinition("pano.plugin.faq.manage")
+class ManageFAQPermission : PanelPermission("fa-question-circle")
 ```
 - **Config**: Use `PluginConfigManager` for settings. 
     - Keep general settings in the **Config** classes whenever possible.
@@ -173,7 +173,7 @@ pluginBeanContext.beanFactory.registerSingleton(PluginConfigManager::class.java.
 Templates for translations must include support for **Turkish (tr)**, **English (en)**, and **Russian (ru)**.
 
 ### 🏠 Localized Translations
-- **Boilerplate Bridge**: The `main.js` in the boilerplate defines a custom `_` (underscore) method that automatically handles the plugin's namespace (e.g., `plugins.your-plugin-id.key`).
+- **FAQ Plugin Bridge**: The `main.js` defines a custom `_` (underscore) method that automatically handles the plugin's namespace (e.g., `plugins.faq.key`).
 - **Usage**: When using this localized `_` function in Svelte components, provide only the relative key (e.g., use `$_('title')` instead of the full path).
 - **Isolation**: Plugins must strictly use their own translation keys. Never modify or rely on translations from other plugins or the Pano host unless explicitly instructed.
 
