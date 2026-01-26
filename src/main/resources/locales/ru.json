@@ -1,0 +1,79 @@
+{
+    "faq": {
+        "title": "FAQ",
+        "description": "Создавайте и управляйте часто задаваемыми вопросами.",
+        "list": "Вопросы",
+        "categories": "Категории",
+        "search": "Поиск вопросов...",
+        "add_faq": "Добавить вопрос",
+        "add_category": "Добавить категорию",
+        "edit_faq": "Редактировать вопрос",
+        "edit_category": "Редактировать категорию",
+        "delete_faq": "Удалить вопрос",
+        "delete_category": "Удалить категорию",
+        "question": "Вопрос",
+        "answer": "Ответ",
+        "category": "Категория",
+        "display_order": "Порядок",
+        "active": "Активен",
+        "uncategorized": "Без категории",
+        "no_faqs": "Вопросы не найдены.",
+        "no_categories": "Категории не найдены.",
+        "settings": {
+            "title": "Настройки FAQ",
+            "display_location": "Место отображения",
+            "display_location_desc": "Где должна отображаться ссылка и контент FAQ?",
+            "location_theme_page": "Страница темы (Ссылка в меню)",
+            "location_support_page": "Страница поддержки",
+            "location_both": "Оба",
+            "saved": "Настройки успешно сохранены."
+        },
+        "category_modal": {
+            "title": "Менеджер категорий",
+            "name": "Название",
+            "order": "Порядок отображения"
+        },
+        "delete_modal": {
+            "title": "Удалить вопрос",
+            "description": "Вы уверены, что хотите удалить этот вопрос?",
+            "confirm": "Удалить",
+            "cancel": "Отмена",
+            "deleting": "Удаление..."
+        },
+        "delete_category_modal": {
+            "title": "Удалить категорию",
+            "description": "Вы уверены, что хотите удалить эту категорию? Вопросы в этой категории станут 'Без категории'.",
+            "confirm": "Удалить",
+            "cancel": "Отмена",
+            "deleting": "Удаление..."
+        }
+    },
+    "permissions": {
+        "MANAGE_FAQ": {
+            "title": "Управление FAQ",
+            "description": "Позволяет управлять записями и категориями FAQ."
+        }
+    },
+    "activity-logs": {
+        "CREATED_FAQ": "<b>{username}</b> создал вопрос: {target}.",
+        "UPDATED_FAQ": "<b>{username}</b> обновил вопрос: {target}.",
+        "DELETED_FAQ": "<b>{username}</b> удалил вопрос: {target}.",
+        "CREATED_FAQ_CATEGORY": "<b>{username}</b> создал категорию FAQ: {target}.",
+        "UPDATED_FAQ_CATEGORY": "<b>{username}</b> обновил категорию FAQ: {target}.",
+        "DELETED_FAQ_CATEGORY": "<b>{username}</b> удалил категорию FAQ: {target}."
+    },
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "saved": "Успешно сохранено.",
+    "deleted": "Успешно удалено.",
+    "error": "Произошла ошибка.",
+    "yes": "Да",
+    "no": "Нет",
+    "actions": "Действия",
+    "errors": {
+        "fields_required": "Пожалуйста, заполните все обязательные поля."
+    },
+    "all": "Все",
+    "active": "Активные",
+    "inactive": "Неактивные"
+}

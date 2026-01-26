@@ -1,3 +1,79 @@
 {
-  "hello-world": "Merhaba dünya!"
+  "faq": {
+    "title": "S.S.S.",
+    "description": "Sıkça Sorulan Soruları oluşturun ve yönetin.",
+    "list": "Sorular",
+    "categories": "Kategoriler",
+    "search": "Soru ara...",
+    "add_faq": "Soru Ekle",
+    "add_category": "Kategori Ekle",
+    "edit_faq": "Soru Düzenle",
+    "edit_category": "Kategori Düzenle",
+    "delete_faq": "Soru Sil",
+    "delete_category": "Kategori Sil",
+    "question": "Soru",
+    "answer": "Cevap",
+    "category": "Kategori",
+    "display_order": "Sıra",
+    "active": "Aktif",
+    "uncategorized": "Kategorisiz",
+    "no_faqs": "Soru bulunamadı.",
+    "no_categories": "Kategori bulunamadı.",
+    "settings": {
+      "title": "S.S.S. Ayarları",
+      "display_location": "Gösterim Konumu",
+      "display_location_desc": "FAQ bağlantısı ve içeriği nerede gösterilmeli?",
+      "location_theme_page": "Tema Sayfası (Navbar Linki)",
+      "location_support_page": "Destek Sayfası",
+      "location_both": "Her İkisi",
+      "saved": "Ayarlar başarıyla kaydedildi."
+    },
+    "category_modal": {
+      "title": "Kategori Yöneticisi",
+      "name": "İsim",
+      "order": "Gösterim Sırası"
+    },
+    "delete_modal": {
+      "title": "Soruyu Sil",
+      "description": "Bu soruyu silmek istediğinize emin misiniz?",
+      "confirm": "Sil",
+      "cancel": "İptal",
+      "deleting": "Siliniyor..."
+    },
+    "delete_category_modal": {
+      "title": "Kategoriyi Sil",
+      "description": "Bu kategoriyi silmek istediğinize emin misiniz? Bu kategorideki sorular kategorisiz olacaktır.",
+      "confirm": "Sil",
+      "cancel": "İptal",
+      "deleting": "Siliniyor..."
+    }
+  },
+  "permissions": {
+    "MANAGE_FAQ": {
+      "title": "S.S.S. Yönet",
+      "description": "S.S.S. girdilerini ve kategorilerini yönetmeye izin verir."
+    }
+  },
+  "activity-logs": {
+    "CREATED_FAQ": "<b>{username}</b> yeni bir soru oluşturdu: {target}.",
+    "UPDATED_FAQ": "<b>{username}</b> bir soruyu güncelledi: {target}.",
+    "DELETED_FAQ": "<b>{username}</b> bir soruyu sildi: {target}.",
+    "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir kategori oluşturdu: {target}.",
+    "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi güncelledi: {target}.",
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi sildi: {target}."
+  },
+  "save": "Kaydet",
+  "cancel": "İptal",
+  "saved": "Başarıyla kaydedildi.",
+  "deleted": "Başarıyla silindi.",
+  "error": "Bir hata oluştu.",
+  "yes": "Evet",
+  "no": "Hayır",
+  "actions": "İşlemler",
+  "errors": {
+    "fields_required": "Lütfen tüm zorunlu alanları doldurun."
+  },
+  "all": "Tümü",
+  "active": "Aktif",
+  "inactive": "Pasif"
 }
