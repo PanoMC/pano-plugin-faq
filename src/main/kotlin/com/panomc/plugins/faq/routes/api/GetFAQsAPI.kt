@@ -30,8 +30,9 @@ class GetFAQsAPI(
         ValidationHandlerBuilder.create(schemaRepository).build()
 
     override suspend fun handle(context: RoutingContext): Result {
+        val search = context.queryParams().get("search")
         val sqlClient = databaseManager.getSqlClient()
-        val faqs = faqDao.getActive(sqlClient)
+        val faqs = faqDao.getActive(search, sqlClient)
         val categories = faqCategoryDao.getAll(sqlClient)
         val config = configManager.config
 

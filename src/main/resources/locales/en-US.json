@@ -46,6 +46,14 @@
       "confirm": "Delete",
       "cancel": "Cancel",
       "deleting": "Deleting..."
+    },
+    "toasts": {
+      "faq_added": "FAQ added successfully.",
+      "faq_updated": "FAQ updated successfully.",
+      "faq_deleted": "FAQ deleted successfully.",
+      "category_added": "Category added successfully.",
+      "category_updated": "Category updated successfully.",
+      "category_deleted": "Category deleted successfully."
     }
   },
   "permissions": {

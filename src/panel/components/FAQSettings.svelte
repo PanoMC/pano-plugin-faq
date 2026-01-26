@@ -5,15 +5,21 @@
     import {showToast} from '@panomc/sdk/toasts';
 
     let config = {
-        displayLocation: 'BOTH'
+        displayLocation: 'THEME_PAGE',
+        showSearch: true,
+        questionLimit: 0
     };
+    let initialConfig = JSON.stringify(config);
     let loading = true;
     let saving = false;
+
+    $: isDirty = JSON.stringify(config) !== initialConfig;
 
     onMount(async () => {
         try {
             const res = await ApiUtil.get({ path: '/api/panel/faq/config' });
             config = res.config;
+            initialConfig = JSON.stringify(config);
         } catch (e) {
             console.error(e);
         } finally {
@@ -24,10 +30,13 @@
     async function save() {
         saving = true;
         try {
+            // Ensure questionLimit is a number
+            config.questionLimit = parseInt(config.questionLimit) || 0;
             await ApiUtil.post({ path: '/api/panel/faq/config', body: config });
-            showToast($_('faq.settings.saved'), 'success');
+            initialConfig = JSON.stringify(config);
+            showToast($_('faq.settings.saved'));
         } catch (e) {
-            showToast($_('error'), 'error');
+            showToast($_('error'));
         } finally {
             saving = false;
         }
@@ -45,15 +54,25 @@
                 <select id="displayLocation" class="form-select" bind:value={config.displayLocation}>
                     <option value="THEME_PAGE">{$_('faq.settings.location_theme_page')}</option>
                     <option value="SUPPORT_PAGE">{$_('faq.settings.location_support_page')}</option>
-                    <option value="BOTH">{$_('faq.settings.location_both')}</option>
                 </select>
                 <div class="form-text">{$_('faq.settings.display_location_desc')}</div>
             </div>
 
-            <button class="btn btn-primary" on:click={save} disabled={saving}>
-                {#if saving}
-                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                {/if}
+            <div class="mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="showSearch" bind:checked={config.showSearch}>
+                    <label class="form-check-label" for="showSearch">{$_('faq.settings.show_search')}</label>
+                </div>
+                <div class="form-text">{$_('faq.settings.show_search_desc')}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="questionLimit" class="form-label">{$_('faq.settings.question_limit')}</label>
+                <input type="number" class="form-control" id="questionLimit" bind:value={config.questionLimit} min="0">
+                <div class="form-text">{$_('faq.settings.question_limit_desc')}</div>
+            </div>
+
+            <button class="btn btn-primary" on:click={save} disabled={saving || !isDirty}>
                 {$_('save')}
             </button>
         </div>

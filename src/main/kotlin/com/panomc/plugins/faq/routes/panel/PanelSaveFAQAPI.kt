@@ -38,7 +38,7 @@ class PanelSaveFAQAPI(
                     .requiredProperty("answer", stringSchema())
                     .optionalProperty("categoryId", numberSchema())
                     .optionalProperty("displayOrder", numberSchema())
-                    .requiredProperty("isActive", booleanSchema())
+                    .requiredProperty("active", booleanSchema())
             ))
             .predicate(RequestPredicate.BODY_REQUIRED)
             .build()
@@ -54,14 +54,14 @@ class PanelSaveFAQAPI(
         val answer = data.getString("answer")
         val categoryId = data.getLong("categoryId")
         val displayOrder = data.getInteger("displayOrder") ?: 0
-        val isActive = data.getBoolean("isActive")
+        val active = data.getBoolean("active")
 
         if (question.isNullOrBlank() || answer.isNullOrBlank()) {
             throw BadRequest()
         }
 
         val sqlClient = databaseManager.getSqlClient()
-        val faq = FAQ(id, question, answer, categoryId, displayOrder, isActive)
+        val faq = FAQ(id, question, answer, categoryId, displayOrder, active)
 
         val userId = authProvider.getUserIdFromRoutingContext(context)
         val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!

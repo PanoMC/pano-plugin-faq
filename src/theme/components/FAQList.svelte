@@ -1,12 +1,18 @@
 <script>
     import {slide} from 'svelte/transition';
+    import {createEventDispatcher} from 'svelte';
+    import {_} from '../../main';
+
+    const dispatch = createEventDispatcher();
 
     export let faqs = [];
     export let categories = [];
-    export let _ = (key) => key;
+    export let config = { showSearch: true, questionLimit: 0 };
+    export let search = '';
 
-    let searchQuery = '';
+    let searchQuery = search;
     let activeFaqId = null;
+    let searchTimeout;
 
     function toggleFaq(id) {
         if (activeFaqId === id) {
@@ -16,10 +22,17 @@
         }
     }
 
-    $: filteredFAQs = faqs.filter(faq => 
-        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    function handleSearch() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            dispatch('search', searchQuery);
+        }, 500);
+    }
+
+    $: limit = config.questionLimit && config.questionLimit > 0 ? config.questionLimit : Infinity;
+
+    // Filter Logic - Server side handles search, but we might still have a limit
+    $: filteredFAQs = faqs.slice(0, limit);
 
     $: groupedFAQs = categories.map(cat => ({
         ...cat,
@@ -30,9 +43,11 @@
 </script>
 
 <div class="faq-list">
-    <div class="mb-4">
-        <input type="text" class="form-control form-control-lg" placeholder={$_('faq.search')} bind:value={searchQuery}>
-    </div>
+    {#if config.showSearch}
+        <div class="mb-4">
+            <input type="text" class="form-control form-control-lg" placeholder={$_('faq.search')} bind:value={searchQuery} on:input={handleSearch}>
+        </div>
+    {/if}
 
     {#if filteredFAQs.length === 0}
          <div class="text-center py-5 text-muted">

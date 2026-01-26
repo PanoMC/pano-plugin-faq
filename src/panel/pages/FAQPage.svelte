@@ -1,14 +1,24 @@
 <script context="module">
-    import ApiUtil from '@panomc/sdk/utils/api';
+    import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
 
     export async function load(event) {
-        const { parent } = event;
+        const { parent, url: { searchParams } } = event;
         const { pageTitle } = await parent();
         pageTitle.set('plugins.pano-plugin-faq.faq.title');
 
+        const page = searchParams.get('page') || 1;
+        const statusParam = searchParams.get('status');
+        const search = searchParams.get('search');
+        
+        const queryParams = buildQueryParams({
+            page,
+            status: statusParam,
+            search
+        });
+
         try {
             const res = await ApiUtil.get({
-                path: '/api/panel/faq/list',
+                path: '/api/panel/faq/list' + queryParams,
                 request: event
             });
             
@@ -18,41 +28,60 @@
         } catch (e) {
             console.error('[FAQ] Failed to load data', e);
             return {
-                data: { faqs: [], categories: [] }
+                data: { faqs: [], categories: [], faqCount: 0, totalPage: 1, page: 1 }
             };
         }
     }
 </script>
 
 <script>
-    import { base, goto } from '@panomc/sdk/svelte';
+    import { base, page, goto } from '@panomc/sdk/svelte';
     import { PageActions, CardHeader, CardFilters, CardFiltersItem, NoContent, Pagination } from '@panomc/sdk/components/panel';
     import { _ } from '../../main';
+    import { buildQueryParams as createQueryParams } from '@panomc/sdk/utils/api';
     
     import FAQRow from '../components/FAQRow.svelte';
     import AddEditFAQModal, { show as showAddEditFAQModal, setCallback as setAddEditFAQCallback } from '../components/modals/AddEditFAQModal.svelte';
-    import AddEditFAQCategoryModal, { show as showAddEditCategoryModal, setCallback as setAddEditCategoryCallback } from '../components/modals/AddEditFAQCategoryModal.svelte';
     import ConfirmDeleteFAQModal, { show as showDeleteFAQModal, setCallback as setDeleteFAQCallback } from '../components/modals/ConfirmDeleteFAQModal.svelte';
-    import ConfirmDeleteFAQCategoryModal, { show as showDeleteCategoryModal, setCallback as setDeleteCategoryCallback } from '../components/modals/ConfirmDeleteFAQCategoryModal.svelte';
 
     export let data;
     
-    let { faqs, categories } = data;
-    $: ({ faqs, categories } = data);
+    $: ({ faqs, categories, faqCount, totalPage } = data);
+    $: currentStatus = $page.url.searchParams.get('status') || 'ALL';
+    $: searchQuery = $page.url.searchParams.get('search') || '';
 
-    let searchQuery = '';
-    let currentPage = 1;
-    let itemsPerPage = 10;
-    let currentStatus = 'ALL'; // ALL, ACTIVE, INACTIVE
+    let searchTimeout;
+    let searching = false;
 
     async function refreshData() {
-        await goto(`${base}/faq`, { invalidateAll: true });
+        const pageNum = data.page === 1 ? null : data.page;
+        const statusVal = $page.url.searchParams.get('status');
+        const searchVal = searchQuery || null;
+
+        const queryParams = createQueryParams({
+            page: pageNum,
+            status: statusVal,
+            search: searchVal
+        });
+
+        await goto(base + `/faq${queryParams}`, { invalidateAll: true, keepfocus: true, noscroll: true });
+    }
+
+    function handleSearch() {
+        searching = true;
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(async () => {
+            data.page = 1; // Reset to page 1 on search
+            try {
+                await refreshData();
+            } finally {
+                searching = false;
+            }
+        }, 500);
     }
 
     setAddEditFAQCallback(refreshData);
-    setAddEditCategoryCallback(refreshData);
     setDeleteFAQCallback(refreshData);
-    setDeleteCategoryCallback(refreshData);
 
     function openAddFAQ() {
         showAddEditFAQModal('create', null, categories);
@@ -66,35 +95,17 @@
         showDeleteFAQModal(faq);
     }
 
-    function openAddCategory() {
-        showAddEditCategoryModal('create', null);
-    }
-
-    // Filter Logic
-    $: filteredFAQs = faqs.filter(faq => {
-        const matchesSearch = 
-            faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-            faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
-        
-        const matchesStatus = 
-            currentStatus === 'ALL' || 
-            (currentStatus === 'ACTIVE' && faq.isActive) || 
-            (currentStatus === 'INACTIVE' && !faq.isActive);
-
-        return matchesSearch && matchesStatus;
-    });
-
-    $: flatList = filteredFAQs.map(f => {
+    // List with category names
+    $: flatList = faqs.map(f => {
         const cat = categories.find(c => c.id === f.categoryId);
         return { ...f, categoryName: cat ? cat.name : $_('faq.uncategorized') };
-    }).sort((a,b) => (a.categoryId || 0) - (b.categoryId || 0) || a.displayOrder - b.displayOrder);
+    });
 
-    $: totalItems = flatList.length;
-    $: totalPage = Math.ceil(totalItems / itemsPerPage) || 1;
-    $: paginatedItems = flatList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    $: paginatedItems = flatList; // Data is already paginated by server
 
-    function onPageChange(e) {
-        currentPage = e.detail;
+    async function onPageChange(e) {
+        data.page = e.detail;
+        await refreshData();
     }
 </script>
 
@@ -102,18 +113,27 @@
     <!-- Action Menu -->
     <PageActions>
         <div slot="left" class="d-none d-lg-block">
-             <div class="input-group input-group-sm" style="width: 250px;">
-                <span class="input-group-text bg-white border-end-0">
-                    <i class="fas fa-search text-muted"></i>
+             <div class="input-group input-group-sm border rounded overflow-hidden" style="width: 250px;">
+                <span class="input-group-text bg-body-tertiary border-0 pe-1">
+                    {#if searching}
+                        <span class="spinner-border spinner-border-sm text-secondary" role="status"></span>
+                    {:else}
+                        <i class="fas fa-search text-secondary"></i>
+                    {/if}
                 </span>
-                <input type="search" class="form-control border-start-0 ps-0" bind:value={searchQuery} placeholder={$_('faq.search')} />
+                <input type="search" class="form-control border-0 bg-body-tertiary shadow-none ps-2" bind:value={searchQuery} on:input={handleSearch} placeholder={$_('faq.search')} />
+                {#if searchQuery}
+                    <button type="button" class="btn btn-link link-secondary border-0 bg-body-tertiary px-2 py-0 text-decoration-none" on:click={() => { searchQuery = ''; handleSearch(); }}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                {/if}
             </div>
         </div>
         <div slot="right" class="d-flex gap-2">
-            <button type="button" class="btn btn-secondary" on:click={openAddCategory}>
-                <i class="fas fa-folder-plus"></i>
-                <span class="d-lg-inline d-none ms-2">{$_('faq.add_category')}</span>
-            </button>
+            <a href={`${base}/faq/categories`} class="btn btn-secondary">
+                <i class="fas fa-folder"></i>
+                <span class="d-lg-inline d-none ms-2">{$_('faq.categories')}</span>
+            </a>
             <button type="button" class="btn btn-primary" on:click={openAddFAQ}>
                 <i class="fas fa-plus"></i>
                 <span class="d-lg-inline d-none ms-2">{$_('faq.add_faq')}</span>
@@ -124,18 +144,18 @@
     <div class="card">
         <CardHeader>
             <div slot="left">
-                {$_('faq.list')} ({totalItems})
+                {$_('faq.list')} ({faqCount})
             </div>
             <CardFilters slot="right">
-                <button class="nav-link border-0 bg-transparent" class:active={currentStatus === 'ALL'} on:click={() => currentStatus = 'ALL'}>
+                <CardFiltersItem href={`/faq`} active={currentStatus === 'ALL'}>
                     {$_('all')}
-                </button>
-                <button class="nav-link border-0 bg-transparent" class:active={currentStatus === 'ACTIVE'} on:click={() => currentStatus = 'ACTIVE'}>
+                </CardFiltersItem>
+                <CardFiltersItem href={`/faq?status=ACTIVE`} active={currentStatus === 'ACTIVE'}>
                     {$_('active')}
-                </button>
-                <button class="nav-link border-0 bg-transparent" class:active={currentStatus === 'INACTIVE'} on:click={() => currentStatus = 'INACTIVE'}>
+                </CardFiltersItem>
+                <CardFiltersItem href={`/faq?status=INACTIVE`} active={currentStatus === 'INACTIVE'}>
                     {$_('inactive')}
-                </button>
+                </CardFiltersItem>
             </CardFilters>
         </CardHeader>
 
@@ -167,7 +187,7 @@
         </div>
         <div class="card-footer">
             <Pagination 
-                page={currentPage} 
+                page={data.page} 
                 totalPage={totalPage} 
                 on:change={onPageChange} 
             />
@@ -177,7 +197,5 @@
 
     <!-- Modals -->
     <AddEditFAQModal />
-    <AddEditFAQCategoryModal />
     <ConfirmDeleteFAQModal />
-    <ConfirmDeleteFAQCategoryModal />
 </article>

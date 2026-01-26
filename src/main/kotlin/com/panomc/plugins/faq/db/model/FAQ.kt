@@ -8,5 +8,5 @@ open class FAQ(
     val answer: String = "",
     val categoryId: Long? = null,
     val displayOrder: Int = 0,
-    val isActive: Boolean = true
+    val active: Boolean = true
 ) : DBEntity()

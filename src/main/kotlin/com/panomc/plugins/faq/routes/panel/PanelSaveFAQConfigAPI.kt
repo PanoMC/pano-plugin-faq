@@ -14,8 +14,7 @@ import io.vertx.ext.web.validation.ValidationHandler
 import io.vertx.ext.web.validation.builder.Bodies
 import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
-import io.vertx.json.schema.common.dsl.Schemas.objectSchema
-import io.vertx.json.schema.common.dsl.Schemas.stringSchema
+import io.vertx.json.schema.common.dsl.Schemas.*
 
 @Endpoint
 class PanelSaveFAQConfigAPI(
@@ -33,6 +32,8 @@ class PanelSaveFAQConfigAPI(
             .body(Bodies.json(
                 objectSchema()
                     .optionalProperty("displayLocation", stringSchema())
+                    .optionalProperty("showSearch", booleanSchema())
+                    .optionalProperty("questionLimit", numberSchema())
             ))
             .build()
 
@@ -44,6 +45,8 @@ class PanelSaveFAQConfigAPI(
         val currentConfig = configManager.config
 
         body.getString("displayLocation")?.let { currentConfig.displayLocation = FAQDisplayLocation.valueOf(it) }
+        if (body.containsKey("showSearch")) currentConfig.showSearch = body.getBoolean("showSearch")
+        if (body.containsKey("questionLimit")) currentConfig.questionLimit = body.getInteger("questionLimit")
 
         configManager.saveConfig(JsonObject.mapFrom(currentConfig))
 

@@ -56,10 +56,50 @@ class FAQCategoryDaoImpl : FAQCategoryDao() {
     }
 
     override suspend fun getAll(sqlClient: SqlClient): List<FAQCategory> {
+        val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` ORDER BY `displayOrder` ASC, `id` ASC"
         val rows: RowSet<Row> = sqlClient
-            .query("SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` ORDER BY `displayOrder` ASC, `id` ASC")
+            .preparedQuery(query)
             .execute()
             .coAwait()
         return rows.toEntities()
+    }
+
+    override suspend fun getAll(page: Long, search: String?, sqlClient: SqlClient): List<FAQCategory> {
+        val limit = 10L
+        val offset = (page - 1) * limit
+        val whereClauses = mutableListOf<String>()
+        val params = mutableListOf<Any>()
+
+        if (search != null) {
+            whereClauses.add("`name` LIKE ?")
+            params.add("%$search%")
+        }
+
+        val whereQuery = if (whereClauses.isNotEmpty()) "WHERE " + whereClauses.joinToString(" AND ") else ""
+        val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` $whereQuery ORDER BY `displayOrder` ASC, `id` ASC LIMIT ? OFFSET ?"
+        params.add(limit)
+        params.add(offset)
+
+        val rows = sqlClient.preparedQuery(query)
+            .execute(Tuple.from(params))
+            .coAwait()
+        return rows.toEntities()
+    }
+
+    override suspend fun count(search: String?, sqlClient: SqlClient): Long {
+        val whereClauses = mutableListOf<String>()
+        val params = mutableListOf<Any>()
+
+        if (search != null) {
+            whereClauses.add("`name` LIKE ?")
+            params.add("%$search%")
+        }
+
+        val whereQuery = if (whereClauses.isNotEmpty()) "WHERE " + whereClauses.joinToString(" AND ") else ""
+        val query = "SELECT COUNT(*) FROM `${getTablePrefix() + tableName}` $whereQuery"
+        val rows = sqlClient.preparedQuery(query)
+            .execute(Tuple.from(params))
+            .coAwait()
+        return rows.first().getLong(0)
     }
 }

@@ -1,39 +1,60 @@
-<script>
-    import {onMount} from 'svelte';
-    import {_} from '../main';
+<script context="module">
     import ApiUtil from '@panomc/sdk/utils/api';
-    import {PageTitle} from '@panomc/sdk/components/theme';
+
+    export async function load(event) {
+        const { url: { searchParams } } = event;
+        const search = searchParams.get('search') || '';
+
+        try {
+            const res = await ApiUtil.get({ 
+                path: '/api/faq/list' + (search ? `?search=${encodeURIComponent(search)}` : ''),
+                request: event
+            });
+            
+            return {
+                data: {
+                    faqs: res.faqs,
+                    categories: res.categories,
+                    config: res.config,
+                    search
+                }
+            };
+        } catch (e) {
+            console.error('[FAQ] Failed to load data', e);
+            return {
+                data: {
+                    faqs: [],
+                    categories: [],
+                    config: {},
+                    search: ''
+                }
+            };
+        }
+    }
+</script>
+
+<script>
+    import { _ } from '../main';
+    import { PageTitle } from '@panomc/sdk/components/theme';
+    import { goto, page } from '@panomc/sdk/svelte';
     import FAQList from './components/FAQList.svelte';
 
-    let faqs = [];
-    let categories = [];
-    let loading = true;
-    let config = {};
+    export let data;
+    $: ({ faqs, categories, config, search } = data);
 
-    onMount(async () => {
-        try {
-            const res = await ApiUtil.get({ path: '/api/faq/list' });
-            faqs = res.faqs;
-            categories = res.categories;
-            config = res.config;
-        } catch (e) {
-            console.error(e);
-        } finally {
-            loading = false;
+    function handleSearch(e) {
+        const query = e.detail;
+        const url = new URL($page.url);
+        if (query) {
+            url.searchParams.set('search', query);
+        } else {
+            url.searchParams.delete('search');
         }
-    });
+        goto(url.toString(), { keepfocus: true, noscroll: true });
+    }
 </script>
 
 <div class="vstack gap-3">
     <PageTitle title={$_('faq.title')} />
-
-    {#if loading}
-         <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    {:else}
-        <FAQList {faqs} {categories} _={$_} />
-    {/if}
+    <FAQList {faqs} {categories} {config} {search} on:search={handleSearch} />
 </div>

@@ -5,6 +5,7 @@
     "list": "Sorular",
     "categories": "Kategoriler",
     "search": "Soru ara...",
+    "search_category": "Kategori ara...",
     "add_faq": "Soru Ekle",
     "add_category": "Kategori Ekle",
     "edit_faq": "Soru Düzenle",
@@ -25,7 +26,10 @@
       "display_location_desc": "FAQ bağlantısı ve içeriği nerede gösterilmeli?",
       "location_theme_page": "Tema Sayfası (Navbar Linki)",
       "location_support_page": "Destek Sayfası",
-      "location_both": "Her İkisi",
+      "show_search": "Arama Çubuğunu Göster",
+      "show_search_desc": "FAQ listesinin üzerinde arama çubuğu gösterilsin mi?",
+      "question_limit": "Soru Limitini Belirle",
+      "question_limit_desc": "Gösterilecek maksimum soru sayısı. Sınırsız gösterim için 0 girin.",
       "saved": "Ayarlar başarıyla kaydedildi."
     },
     "category_modal": {
@@ -46,6 +50,14 @@
       "confirm": "Sil",
       "cancel": "İptal",
       "deleting": "Siliniyor..."
+    },
+    "toasts": {
+      "faq_added": "Soru başarıyla eklendi.",
+      "faq_updated": "Soru başarıyla güncellendi.",
+      "faq_deleted": "Soru başarıyla silindi.",
+      "category_added": "Kategori başarıyla eklendi.",
+      "category_updated": "Kategori başarıyla güncellendi.",
+      "category_deleted": "Kategori başarıyla silindi."
     }
   },
   "permissions": {

@@ -9,7 +9,8 @@ abstract class FAQDao : Dao<FAQ>(FAQ::class.java) {
     abstract suspend fun update(faq: FAQ, sqlClient: SqlClient)
     abstract suspend fun deleteById(id: Long, sqlClient: SqlClient)
     abstract suspend fun getById(id: Long, sqlClient: SqlClient): FAQ?
-    abstract suspend fun getAll(sqlClient: SqlClient): List<FAQ>
+    abstract suspend fun getAll(page: Long, status: Boolean?, search: String?, sqlClient: SqlClient): List<FAQ>
+    abstract suspend fun count(status: Boolean?, search: String?, sqlClient: SqlClient): Long
     abstract suspend fun getByCategoryId(categoryId: Long, sqlClient: SqlClient): List<FAQ>
-    abstract suspend fun getActive(sqlClient: SqlClient): List<FAQ>
+    abstract suspend fun getActive(search: String?, sqlClient: SqlClient): List<FAQ>
 }

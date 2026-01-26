@@ -15,16 +15,16 @@
         
         if (selectedFaq) {
             const data = JSON.parse(JSON.stringify(selectedFaq));
-            // Ensure isActive is boolean if it comes as string/number
+            // Ensure active is boolean if it comes as string/number
             // Sometimes APIs return boolean as string "true"/"false" or 1/0
             // But here we cloned it effectively. 
             // If the original object had a mismatch, we should fix it here.
             
             // However, the user says "changing it doesn't work". 
-            // In the form: <input type="checkbox" ... bind:checked={$faq.isActive}>
+            // In the form: <input type="checkbox" ... bind:checked={$faq.active}>
             // If the initial value is undefined or null, it might be an issue.
             // Let's force it to be boolean.
-            if (data.isActive === undefined) data.isActive = true;
+            if (data.active === undefined) data.active = true;
             
             faq.set(data);
         } else {
@@ -34,7 +34,7 @@
                 answer: '',
                 categoryId: null,
                 displayOrder: 0,
-                isActive: true
+                active: true
             });
         }
 
@@ -66,7 +66,7 @@
 
     async function handleSave() {
         if (!isFormValid) {
-            showToast($_('errors.fields_required'), 'error');
+            showToast($_('errors.fields_required'));
             return;
         }
 
@@ -77,7 +77,7 @@
                 question: $faq.question,
                 answer: $faq.answer,
                 displayOrder: $faq.displayOrder,
-                isActive: $faq.isActive
+                active: $faq.active
             };
 
             if ($faq.id) body.id = $faq.id;
@@ -88,12 +88,12 @@
                 body
             });
 
-            showToast($_('saved'), 'success');
+            showToast($mode === 'create' ? $_('faq.toasts.faq_added') : $_('faq.toasts.faq_updated'));
             callback();
             hide();
         } catch (e) {
             console.error(e);
-            showToast($_('error'), 'error');
+            showToast($_('error'));
         } finally {
             saving = false;
         }
@@ -101,7 +101,7 @@
 </script>
 
 <div class="modal fade" bind:this={$modalElement} tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{$mode === 'edit' ? $_('faq.edit_faq') : $_('faq.add_faq')}</h5>
@@ -133,9 +133,11 @@
                     <input type="number" class="form-control" id="displayOrder" bind:value={$faq.displayOrder} />
                 </div>
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="isActive" bind:checked={$faq.isActive}>
-                    <label class="form-check-label" for="isActive">{$_('faq.active')}</label>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="active" bind:checked={$faq.active}>
+                        <label class="form-check-label" for="active">{$_('faq.active')}</label>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

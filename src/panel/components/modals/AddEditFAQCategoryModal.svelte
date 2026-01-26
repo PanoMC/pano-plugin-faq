@@ -48,7 +48,7 @@
 
     async function handleSave() {
         if (!isFormValid) {
-            showToast($_('errors.fields_required'), 'error');
+            showToast($_('errors.fields_required'));
             return;
         }
 
@@ -67,12 +67,12 @@
                 body
             });
 
-            showToast($_('saved'), 'success');
+            showToast($mode === 'create' ? $_('faq.toasts.category_added') : $_('faq.toasts.category_updated'));
             callback();
             hide();
         } catch (e) {
             console.error(e);
-            showToast($_('error'), 'error');
+            showToast($_('error'));
         } finally {
             saving = false;
         }
@@ -80,7 +80,7 @@
 </script>
 
 <div class="modal fade" bind:this={$modalElement} tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{$mode === 'edit' ? $_('faq.edit_category') : $_('faq.add_category')}</h5>
