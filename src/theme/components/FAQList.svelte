@@ -27,13 +27,13 @@
   {:else}
     {#each groupedFAQs as category (category.id)}
       {#if category.items.length > 0}
-        <div class="badge text-bg-primary">{category.name}</div>
+        <div class="badge text-bg-secondary mx-auto">{category.name}</div>
         <div class="accordion">
           {#each category.items as faq (faq.id)}
             <div class="accordion-item">
-              <h2 class="accordion-header fw-bolder">
+              <h2 class="accordion-header">
                 <button
-                  class="accordion-button"
+                  class="accordion-button fa-bolder"
                   type="button"
                   class:collapsed={activeFaqId !== faq.id}
                   on:click={() => toggleFaq(faq.id)}>
