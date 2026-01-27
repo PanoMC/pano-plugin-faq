@@ -1,18 +1,29 @@
-<div class="faq-list">
+<div class="faq-list vstack gap-3">
   {#if config.showSearch}
-    <input
-      type="text"
-      class="form-control rounded-pill mx-auto w-auto"
-      placeholder={$_('faq.search')}
-      bind:value={searchQuery}
-      on:input={handleSearch} />
+    <div class="d-flex justify-content-center">
+      <div class="position-relative">
+        <div
+          class="position-absolute top-50 start-0 translate-middle-y ms-3 z-3 text-muted"
+          style="pointer-events: none;">
+          {#if isSearching}
+            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+          {:else}
+            <i class="fa-solid fa-magnifying-glass"></i>
+          {/if}
+        </div>
+        <input
+          type="text"
+          class="form-control rounded-pill ps-5"
+          style="width: 300px;"
+          placeholder={$_('faq.search')}
+          bind:value={searchQuery}
+          on:input={handleSearch} />
+      </div>
+    </div>
   {/if}
 
   {#if filteredFAQs.length === 0}
-    <div class="text-center">
-      <i class="fas fa-question-circle mb-3"></i>
-      <p>{$_('faq.no_faqs')}</p>
-    </div>
+    <NoContent text={$_('faq.no_faqs')} />
   {:else}
     {#each groupedFAQs as category (category.id)}
       {#if category.items.length > 0}
@@ -43,32 +54,30 @@
     {/each}
 
     {#if uncategorizedFAQs.length > 0}
-      <div class="mb-4">
-        {#if categories.length > 0}
-          <h3 class="mb-3 border-bottom pb-2">{$_('faq.uncategorized')}</h3>
-        {/if}
-        <div class="accordion">
-          {#each uncategorizedFAQs as faq (faq.id)}
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  class:collapsed={activeFaqId !== faq.id}
-                  on:click={() => toggleFaq(faq.id)}>
-                  {faq.question}
-                </button>
-              </h2>
-              {#if activeFaqId === faq.id}
-                <div class="accordion-collapse collapse show" transition:slide|local>
-                  <div class="accordion-body">
-                    {@html faq.answer}
-                  </div>
+      {#if categories.length > 0}
+        <div class="badge text-bg-primary mx-auto">{$_('faq.uncategorized')}</div>
+      {/if}
+      <div class="accordion">
+        {#each uncategorizedFAQs as faq (faq.id)}
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button fw-bolder"
+                type="button"
+                class:collapsed={activeFaqId !== faq.id}
+                on:click={() => toggleFaq(faq.id)}>
+                {faq.question}
+              </button>
+            </h2>
+            {#if activeFaqId === faq.id}
+              <div class="accordion-collapse collapse show" transition:slide|local>
+                <div class="accordion-body">
+                  {@html faq.answer}
                 </div>
-              {/if}
-            </div>
-          {/each}
-        </div>
+              </div>
+            {/if}
+          </div>
+        {/each}
       </div>
     {/if}
   {/if}
@@ -78,6 +87,7 @@
   import { slide } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
   import { _ } from '../../main';
+  import { NoContent } from '@panomc/sdk/components/theme';
 
   const dispatch = createEventDispatcher();
 
@@ -85,6 +95,7 @@
   export let categories = [];
   export let config = { showSearch: true, questionLimit: 0 };
   export let search = '';
+  export let isSearching = false;
 
   let searchQuery = search;
   let activeFaqId = null;

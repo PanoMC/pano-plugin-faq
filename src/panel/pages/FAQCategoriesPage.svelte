@@ -155,7 +155,7 @@
     try {
       await goto(base + `/faq/categories${queryParams}`, {
         invalidateAll: true,
-        keepfocus: true,
+        keepFocus: true,
         noscroll: true,
       });
     } finally {
@@ -166,7 +166,10 @@
   function onSearchInput(value) {
     searchQuery = value;
     data.page = 1;
-    refreshData();
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      refreshData();
+    }, 500);
   }
 
   setAddEditCategoryCallback(refreshData);

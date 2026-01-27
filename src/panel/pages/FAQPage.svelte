@@ -174,7 +174,7 @@
     try {
       await goto(base + `/faq${queryParams}`, {
         invalidateAll: true,
-        keepfocus: true,
+        keepFocus: true,
         noscroll: true,
       });
     } finally {
@@ -185,7 +185,10 @@
   function onSearchInput(value) {
     searchQuery = value;
     data.page = 1;
-    refreshData();
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      refreshData();
+    }, 500);
   }
 
   setAddEditFAQCallback(refreshData);
