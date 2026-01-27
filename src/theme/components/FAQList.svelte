@@ -27,7 +27,7 @@
   {:else}
     {#each groupedFAQs as category (category.id)}
       {#if category.items.length > 0}
-        <div class="badge text-bg-secondary mx-auto">{category.name}</div>
+        <div class="badge text-bg-gray mx-auto">{category.name}</div>
         <div class="accordion">
           {#each category.items as faq (faq.id)}
             <div class="accordion-item">
