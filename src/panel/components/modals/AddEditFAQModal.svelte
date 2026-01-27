@@ -71,7 +71,7 @@
           type="button"
           class="btn btn-secondary w-100"
           on:click={handleSave}
-          disabled={saving}>
+          disabled={saving || !isFormValid || ($mode === 'edit' && !isDirty)}>
           {#if saving}
             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"
             ></span>
@@ -88,6 +88,7 @@
 
   const modalElement = writable();
   const faq = writable({});
+  const initialFaq = writable('');
   const categories = writable([]);
   const mode = writable('create');
 
@@ -98,30 +99,19 @@
     mode.set(newMode);
     categories.set(categoryList);
 
-    if (selectedFaq) {
-      const data = JSON.parse(JSON.stringify(selectedFaq));
-      // Ensure active is boolean if it comes as string/number
-      // Sometimes APIs return boolean as string "true"/"false" or 1/0
-      // But here we cloned it effectively.
-      // If the original object had a mismatch, we should fix it here.
+    const data = selectedFaq ? JSON.parse(JSON.stringify(selectedFaq)) : {
+      id: null,
+      question: '',
+      answer: '',
+      categoryId: null,
+      displayOrder: 0,
+      active: true,
+    };
 
-      // However, the user says "changing it doesn't work".
-      // In the form: <input type="checkbox" ... bind:checked={$faq.active}>
-      // If the initial value is undefined or null, it might be an issue.
-      // Let's force it to be boolean.
-      if (data.active === undefined) data.active = true;
+    if (data.active === undefined) data.active = true;
 
-      faq.set(data);
-    } else {
-      faq.set({
-        id: null,
-        question: '',
-        answer: '',
-        categoryId: null,
-        displayOrder: 0,
-        active: true,
-      });
-    }
+    faq.set(data);
+    initialFaq.set(JSON.stringify(data));
 
     modal = new window.bootstrap.Modal(get(modalElement), {
       backdrop: 'static',
@@ -148,6 +138,7 @@
 
   // Computed properties for form binding
   $: isFormValid = $faq.question && $faq.answer;
+  $: isDirty = JSON.stringify($faq) !== $initialFaq;
 
   async function handleSave() {
     if (!isFormValid) {

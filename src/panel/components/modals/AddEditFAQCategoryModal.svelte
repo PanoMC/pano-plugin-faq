@@ -38,7 +38,7 @@
           type="button"
           class="btn btn-secondary w-100"
           on:click={handleSave}
-          disabled={saving}>
+          disabled={saving || !isFormValid || ($mode === 'edit' && !isDirty)}>
           {#if saving}
             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"
             ></span>
@@ -55,6 +55,7 @@
 
   const modalElement = writable();
   const category = writable({});
+  const initialCategory = writable('');
   const mode = writable('create');
 
   let callback = () => {};
@@ -63,15 +64,14 @@
   export function show(newMode, selectedCategory = null) {
     mode.set(newMode);
 
-    if (selectedCategory) {
-      category.set(JSON.parse(JSON.stringify(selectedCategory)));
-    } else {
-      category.set({
-        id: null,
-        name: '',
-        displayOrder: 0,
-      });
-    }
+    const data = selectedCategory ? JSON.parse(JSON.stringify(selectedCategory)) : {
+      id: null,
+      name: '',
+      displayOrder: 0,
+    };
+
+    category.set(data);
+    initialCategory.set(JSON.stringify(data));
 
     modal = new window.bootstrap.Modal(get(modalElement), {
       backdrop: 'static',
@@ -97,6 +97,7 @@
   let saving = false;
 
   $: isFormValid = $category.name;
+  $: isDirty = JSON.stringify($category) !== $initialCategory;
 
   async function handleSave() {
     if (!isFormValid) {
