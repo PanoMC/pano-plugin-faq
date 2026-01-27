@@ -20,16 +20,16 @@
     "display_order": "Sıra",
     "active": "Durum",
     "uncategorized": "Kategorisiz",
-    "no_faqs": "Soru yok.",
+    "no_faqs": "S.S.S. yok.",
     "no_categories": "Kategori bulunamadı.",
     "settings": {
       "title": "S.S.S. Ayarları",
       "display_location": "Gösterim Konumu",
-      "display_location_desc": "FAQ bağlantısı ve içeriği nerede gösterilmeli?",
+      "display_location_desc": "S.S.S. bağlantısı ve içeriği nerede gösterilmeli?",
       "location_theme_page": "Tema Sayfası (Navbar Linki)",
       "location_support_page": "Destek Sayfası",
       "show_search": "Arama Çubuğunu Göster",
-      "show_search_desc": "FAQ listesinin üzerinde arama çubuğu gösterilsin mi?",
+      "show_search_desc": "S.S.S. listesinin üzerinde arama çubuğu gösterilsin mi?",
       "question_limit": "Soru Limitini Belirle",
       "question_limit_desc": "Gösterilecek maksimum soru sayısı. Sınırsız gösterim için 0 girin.",
       "saved": "Ayarlar başarıyla kaydedildi."
@@ -54,9 +54,9 @@
       "deleting": "Siliniyor..."
     },
     "toasts": {
-      "faq_added": "Soru başarıyla eklendi.",
-      "faq_updated": "Soru başarıyla güncellendi.",
-      "faq_deleted": "Soru başarıyla silindi.",
+      "faq_added": "S.S.S. başarıyla eklendi.",
+      "faq_updated": "S.S.S. başarıyla güncellendi.",
+      "faq_deleted": "S.S.S. başarıyla silindi.",
       "category_added": "Kategori başarıyla eklendi.",
       "category_updated": "Kategori başarıyla güncellendi.",
       "category_deleted": "Kategori başarıyla silindi."
@@ -69,9 +69,9 @@
     }
   },
   "activity-logs": {
-    "CREATED_FAQ": "<b>{username}</b> yeni bir soru oluşturdu: {target}.",
-    "UPDATED_FAQ": "<b>{username}</b> bir soruyu güncelledi: {target}.",
-    "DELETED_FAQ": "<b>{username}</b> bir soruyu sildi: {target}.",
+    "CREATED_FAQ": "<b>{username}</b> yeni bir S.S.S. oluşturdu: {target}.",
+    "UPDATED_FAQ": "<b>{username}</b> bir S.S.S. güncelledi: {target}.",
+    "DELETED_FAQ": "<b>{username}</b> bir S.S.S. sildi: {target}.",
     "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir kategori oluşturdu: {target}.",
     "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi güncelledi: {target}.",
     "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi sildi: {target}."
