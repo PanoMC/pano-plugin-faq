@@ -2,7 +2,7 @@ package com.panomc.plugins.faq.db.model
 
 import com.panomc.platform.db.DBEntity
 
-open class FAQCategory(
+open class FaqCategory(
     val id: Long? = null,
     val name: String = "",
     val displayOrder: Int = 0

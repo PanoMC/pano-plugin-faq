@@ -5,8 +5,8 @@ import com.panomc.platform.auth.AuthProvider
 import com.panomc.platform.db.DatabaseManager
 import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
-import com.panomc.plugins.faq.db.dao.FAQCategoryDao
-import com.panomc.plugins.faq.db.dao.FAQDao
+import com.panomc.plugins.faq.db.dao.FaqCategoryDao
+import com.panomc.plugins.faq.db.dao.FaqDao
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
@@ -16,8 +16,8 @@ import io.vertx.json.schema.SchemaRepository
 @Endpoint
 class PanelGetFAQsAPI(
     private val plugin: FAQPlugin,
-    private val faqDao: FAQDao,
-    private val faqCategoryDao: FAQCategoryDao
+    private val faqDao: FaqDao,
+    private val faqCategoryDao: FaqCategoryDao
 ) : PanelApi() {
     override val paths = listOf(Path("/api/panel/faq/list", RouteType.GET))
 

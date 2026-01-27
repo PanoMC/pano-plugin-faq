@@ -28,6 +28,7 @@
       "display_location_desc": "S.S.S. bağlantısı ve içeriği nerede gösterilmeli?",
       "location_theme_page": "Tema Sayfası (Navbar Linki)",
       "location_support_page": "Destek Sayfası",
+      "location_both": "Her İkisi",
       "show_search": "Arama Çubuğunu Göster",
       "show_search_desc": "S.S.S. listesinin üzerinde arama çubuğu gösterilsin mi?",
       "question_limit": "Soru Limitini Belirle",
@@ -74,7 +75,8 @@
     "DELETED_FAQ": "<b>{username}</b> bir S.S.S. sildi: {target}.",
     "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir kategori oluşturdu: {target}.",
     "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi güncelledi: {target}.",
-    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi sildi: {target}."
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi sildi: {target}.",
+    "UPDATED_FAQ_SETTINGS": "<b>{username}</b> S.S.S. ayarlarını güncelledi."
   },
   "save": "Kaydet",
   "cancel": "İptal",

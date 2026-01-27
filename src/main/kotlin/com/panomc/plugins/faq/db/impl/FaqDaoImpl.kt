@@ -1,8 +1,8 @@
 package com.panomc.plugins.faq.db.impl
 
 import com.panomc.platform.annotation.Dao
-import com.panomc.plugins.faq.db.dao.FAQDao
-import com.panomc.plugins.faq.db.model.FAQ
+import com.panomc.plugins.faq.db.dao.FaqDao
+import com.panomc.plugins.faq.db.model.Faq
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.mysqlclient.MySQLClient
 import io.vertx.sqlclient.Row
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope
 @Dao
 @Lazy
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-class FAQDaoImpl : FAQDao() {
+class FaqDaoImpl : FaqDao() {
     override val fields = listOf("id", "question", "answer", "categoryId", "displayOrder", "active")
 
     override suspend fun init(sqlClient: SqlClient) {
@@ -38,7 +38,7 @@ class FAQDaoImpl : FAQDao() {
         }
     }
 
-    override suspend fun add(faq: FAQ, sqlClient: SqlClient): Long {
+    override suspend fun add(faq: Faq, sqlClient: SqlClient): Long {
         val query = "INSERT INTO `${getTablePrefix() + tableName}` (`question`, `answer`, `categoryId`, `displayOrder`, `active`) VALUES (?, ?, ?, ?, ?)"
         val rows = sqlClient.preparedQuery(query)
             .execute(Tuple.of(faq.question, faq.answer, faq.categoryId, faq.displayOrder, faq.active))
@@ -46,7 +46,7 @@ class FAQDaoImpl : FAQDao() {
         return rows.property(MySQLClient.LAST_INSERTED_ID)
     }
 
-    override suspend fun update(faq: FAQ, sqlClient: SqlClient) {
+    override suspend fun update(faq: Faq, sqlClient: SqlClient) {
         val query = "UPDATE `${getTablePrefix() + tableName}` SET `question` = ?, `answer` = ?, `categoryId` = ?, `displayOrder` = ?, `active` = ? WHERE `id` = ?"
         sqlClient.preparedQuery(query)
             .execute(Tuple.of(faq.question, faq.answer, faq.categoryId, faq.displayOrder, faq.active, faq.id))
@@ -58,13 +58,13 @@ class FAQDaoImpl : FAQDao() {
         sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
     }
 
-    override suspend fun getById(id: Long, sqlClient: SqlClient): FAQ? {
+    override suspend fun getById(id: Long, sqlClient: SqlClient): Faq? {
         val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE `id` = ?"
         val rows = sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
         return rows.toEntities().firstOrNull()
     }
 
-    override suspend fun getAll(page: Long, status: Boolean?, search: String?, sqlClient: SqlClient): List<FAQ> {
+    override suspend fun getAll(page: Long, status: Boolean?, search: String?, sqlClient: SqlClient): List<Faq> {
         val offset = (page - 1) * 10
         val query = StringBuilder("SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE 1=1")
         val params = Tuple.tuple()
@@ -116,7 +116,7 @@ class FAQDaoImpl : FAQDao() {
         return rows.toList()[0].getLong(0)
     }
 
-    override suspend fun getByCategoryId(categoryId: Long, sqlClient: SqlClient): List<FAQ> {
+    override suspend fun getByCategoryId(categoryId: Long, sqlClient: SqlClient): List<Faq> {
         val rows: RowSet<Row> = sqlClient
             .preparedQuery("SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE `categoryId` = ? ORDER BY `displayOrder` ASC, `id` ASC")
             .execute(Tuple.of(categoryId))
@@ -124,7 +124,7 @@ class FAQDaoImpl : FAQDao() {
         return rows.toEntities()
     }
 
-    override suspend fun getActive(search: String?, sqlClient: SqlClient): List<FAQ> {
+    override suspend fun getActive(search: String?, sqlClient: SqlClient): List<Faq> {
         val query = StringBuilder("SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE `active` = ?")
         val params = Tuple.of(true)
 

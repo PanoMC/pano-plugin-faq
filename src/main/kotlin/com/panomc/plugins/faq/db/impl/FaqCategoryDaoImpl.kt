@@ -1,8 +1,8 @@
 package com.panomc.plugins.faq.db.impl
 
 import com.panomc.platform.annotation.Dao
-import com.panomc.plugins.faq.db.dao.FAQCategoryDao
-import com.panomc.plugins.faq.db.model.FAQCategory
+import com.panomc.plugins.faq.db.dao.FaqCategoryDao
+import com.panomc.plugins.faq.db.model.FaqCategory
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.mysqlclient.MySQLClient
 import io.vertx.sqlclient.Row
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope
 @Dao
 @Lazy
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-class FAQCategoryDaoImpl : FAQCategoryDao() {
+class FaqCategoryDaoImpl : FaqCategoryDao() {
 
     override suspend fun init(sqlClient: SqlClient) {
         sqlClient.query("""
@@ -29,7 +29,7 @@ class FAQCategoryDaoImpl : FAQCategoryDao() {
         """).execute().coAwait()
     }
 
-    override suspend fun add(category: FAQCategory, sqlClient: SqlClient): Long {
+    override suspend fun add(category: FaqCategory, sqlClient: SqlClient): Long {
         val query = "INSERT INTO `${getTablePrefix() + tableName}` (`name`, `displayOrder`) VALUES (?, ?)"
         val rows = sqlClient.preparedQuery(query)
             .execute(Tuple.of(category.name, category.displayOrder))
@@ -37,7 +37,7 @@ class FAQCategoryDaoImpl : FAQCategoryDao() {
         return rows.property(MySQLClient.LAST_INSERTED_ID)
     }
 
-    override suspend fun update(category: FAQCategory, sqlClient: SqlClient) {
+    override suspend fun update(category: FaqCategory, sqlClient: SqlClient) {
         val query = "UPDATE `${getTablePrefix() + tableName}` SET `name` = ?, `displayOrder` = ? WHERE `id` = ?"
         sqlClient.preparedQuery(query)
             .execute(Tuple.of(category.name, category.displayOrder, category.id))
@@ -49,13 +49,13 @@ class FAQCategoryDaoImpl : FAQCategoryDao() {
         sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
     }
 
-    override suspend fun getById(id: Long, sqlClient: SqlClient): FAQCategory? {
+    override suspend fun getById(id: Long, sqlClient: SqlClient): FaqCategory? {
         val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE `id` = ?"
         val rows = sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
         return rows.toEntities().firstOrNull()
     }
 
-    override suspend fun getAll(sqlClient: SqlClient): List<FAQCategory> {
+    override suspend fun getAll(sqlClient: SqlClient): List<FaqCategory> {
         val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` ORDER BY `displayOrder` ASC, `id` ASC"
         val rows: RowSet<Row> = sqlClient
             .preparedQuery(query)
@@ -64,7 +64,7 @@ class FAQCategoryDaoImpl : FAQCategoryDao() {
         return rows.toEntities()
     }
 
-    override suspend fun getAll(page: Long, search: String?, sqlClient: SqlClient): List<FAQCategory> {
+    override suspend fun getAll(page: Long, search: String?, sqlClient: SqlClient): List<FaqCategory> {
         val limit = 10L
         val offset = (page - 1) * limit
         val whereClauses = mutableListOf<String>()

@@ -6,7 +6,7 @@ import com.panomc.platform.db.DatabaseManager
 import com.panomc.platform.error.BadRequest
 import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
-import com.panomc.plugins.faq.db.dao.FAQCategoryDao
+import com.panomc.plugins.faq.db.dao.FaqCategoryDao
 import com.panomc.plugins.faq.log.DeletedFAQCategoryLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
@@ -21,7 +21,7 @@ import io.vertx.json.schema.common.dsl.Schemas.objectSchema
 @Endpoint
 class PanelDeleteFAQCategoryAPI(
     private val plugin: FAQPlugin,
-    private val faqCategoryDao: FAQCategoryDao
+    private val faqCategoryDao: FaqCategoryDao
 ) : PanelApi() {
     override val paths = listOf(Path("/api/panel/faq/category/delete", RouteType.POST))
 

@@ -4,9 +4,11 @@ import com.panomc.platform.annotation.Endpoint
 import com.panomc.platform.api.config.PluginConfigManager
 import com.panomc.platform.auth.AuthProvider
 import com.panomc.platform.model.*
+import com.panomc.platform.db.DatabaseManager
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.config.FAQConfig
 import com.panomc.plugins.faq.config.FAQDisplayLocation
+import com.panomc.plugins.faq.log.UpdatedFAQSettingsLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
@@ -23,6 +25,7 @@ class PanelSaveFAQConfigAPI(
     override val paths = listOf(Path("/api/panel/faq/config", RouteType.POST))
 
     private val authProvider by lazy { plugin.applicationContext.getBean(AuthProvider::class.java) }
+    private val databaseManager by lazy { plugin.applicationContext.getBean(DatabaseManager::class.java) as DatabaseManager }
     private val configManager by lazy {
         plugin.pluginBeanContext.getBean(PluginConfigManager::class.java) as PluginConfigManager<FAQConfig>
     }
@@ -49,6 +52,11 @@ class PanelSaveFAQConfigAPI(
         if (body.containsKey("questionLimit")) currentConfig.questionLimit = body.getInteger("questionLimit")
 
         configManager.saveConfig(JsonObject.mapFrom(currentConfig))
+
+        val userId = authProvider.getUserIdFromRoutingContext(context)
+        val sqlClient = databaseManager.getSqlClient()
+        val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!
+        databaseManager.panelActivityLogDao.add(UpdatedFAQSettingsLog(userId, username, plugin.pluginId), sqlClient)
 
         return Successful(mapOf("config" to currentConfig))
     }

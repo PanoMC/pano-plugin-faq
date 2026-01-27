@@ -28,6 +28,10 @@
       "location_theme_page": "Страница темы (Ссылка в меню)",
       "location_support_page": "Страница поддержки",
       "location_both": "Оба",
+      "show_search": "Показать строку поиска",
+      "show_search_desc": "Должна ли строка поиска отображаться над списком FAQ?",
+      "question_limit": "Установить лимит вопросов",
+      "question_limit_desc": "Максимальное количество вопросов для отображения. Введите 0 для неограниченного количества.",
       "saved": "Настройки успешно сохранены."
     },
     "category_modal": {
@@ -48,6 +52,14 @@
       "confirm": "Удалить",
       "cancel": "Отмена",
       "deleting": "Удаление..."
+    },
+    "toasts": {
+      "faq_added": "Вопрос успешно добавлен.",
+      "faq_updated": "Вопрос успешно обновлен.",
+      "faq_deleted": "Вопрос успешно удален.",
+      "category_added": "Категория успешно добавлена.",
+      "category_updated": "Категория успешно обновлена.",
+      "category_deleted": "Категория успешно удалена."
     }
   },
   "permissions": {
@@ -62,7 +74,8 @@
     "DELETED_FAQ": "<b>{username}</b> удалил вопрос: {target}.",
     "CREATED_FAQ_CATEGORY": "<b>{username}</b> создал категорию FAQ: {target}.",
     "UPDATED_FAQ_CATEGORY": "<b>{username}</b> обновил категорию FAQ: {target}.",
-    "DELETED_FAQ_CATEGORY": "<b>{username}</b> удалил категорию FAQ: {target}."
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> удалил категорию FAQ: {target}.",
+    "UPDATED_FAQ_SETTINGS": "<b>{username}</b> обновил настройки FAQ."
   },
   "save": "Сохранить",
   "cancel": "Отмена",

@@ -28,6 +28,10 @@
       "location_theme_page": "Theme Page (Navbar Link)",
       "location_support_page": "Support Page",
       "location_both": "Both",
+      "show_search": "Show Search Bar",
+      "show_search_desc": "Should the search bar be shown above the FAQ list?",
+      "question_limit": "Set Question Limit",
+      "question_limit_desc": "Maximum number of questions to display. Enter 0 for unlimited.",
       "saved": "Settings saved successfully."
     },
     "category_modal": {
@@ -70,7 +74,8 @@
     "DELETED_FAQ": "<b>{username}</b> deleted FAQ: {target}.",
     "CREATED_FAQ_CATEGORY": "<b>{username}</b> created FAQ category: {target}.",
     "UPDATED_FAQ_CATEGORY": "<b>{username}</b> updated FAQ category: {target}.",
-    "DELETED_FAQ_CATEGORY": "<b>{username}</b> deleted FAQ category: {target}."
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> deleted FAQ category: {target}.",
+    "UPDATED_FAQ_SETTINGS": "<b>{username}</b> updated FAQ settings."
   },
   "save": "Save",
   "cancel": "Cancel",

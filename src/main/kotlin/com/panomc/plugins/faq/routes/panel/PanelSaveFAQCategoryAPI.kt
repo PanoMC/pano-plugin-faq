@@ -6,8 +6,8 @@ import com.panomc.platform.db.DatabaseManager
 import com.panomc.platform.error.BadRequest
 import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
-import com.panomc.plugins.faq.db.dao.FAQCategoryDao
-import com.panomc.plugins.faq.db.model.FAQCategory
+import com.panomc.plugins.faq.db.dao.FaqCategoryDao
+import com.panomc.plugins.faq.db.model.FaqCategory
 import com.panomc.plugins.faq.log.CreatedFAQCategoryLog
 import com.panomc.plugins.faq.log.UpdatedFAQCategoryLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
@@ -22,7 +22,7 @@ import io.vertx.json.schema.common.dsl.Schemas.*
 @Endpoint
 class PanelSaveFAQCategoryAPI(
     private val plugin: FAQPlugin,
-    private val faqCategoryDao: FAQCategoryDao
+    private val faqCategoryDao: FaqCategoryDao
 ) : PanelApi() {
     override val paths = listOf(Path("/api/panel/faq/category/save", RouteType.POST))
 
@@ -55,7 +55,7 @@ class PanelSaveFAQCategoryAPI(
         }
 
         val sqlClient = databaseManager.getSqlClient()
-        val category = FAQCategory(id, name, displayOrder)
+        val category = FaqCategory(id, name, displayOrder)
 
         val userId = authProvider.getUserIdFromRoutingContext(context)
         val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!

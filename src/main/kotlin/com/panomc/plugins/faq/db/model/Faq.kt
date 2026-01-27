@@ -2,7 +2,7 @@ package com.panomc.plugins.faq.db.model
 
 import com.panomc.platform.db.DBEntity
 
-open class FAQ(
+open class Faq(
     val id: Long? = null,
     val question: String = "",
     val answer: String = "",
