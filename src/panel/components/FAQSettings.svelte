@@ -6,10 +6,10 @@
     <div class="card-body animate__animated animate__fadeIn">
       <!-- Display Location -->
       <div class="row mb-3">
-        <label for="displayLocation" class="col-md-6 col-form-label">
-          {$_('faq.settings.display_location')}
+        <label class="col-md-6 col-form-label" for="displayLocation">
+          <span class="d-block">{$_('faq.settings.display_location')}</span>
         </label>
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex align-items-center">
           <select id="displayLocation" class="form-select" bind:value={config.displayLocation}>
             <option value="THEME_PAGE">{$_('faq.settings.location_theme_page')}</option>
             <option value="SUPPORT_PAGE">{$_('faq.settings.location_support_page')}</option>
@@ -20,7 +20,7 @@
       <!-- Show Search -->
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showSearch">
-          {$_('faq.settings.show_search')}
+          <span class="d-block">{$_('faq.settings.show_search')}</span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
           <div class="form-check form-switch">
@@ -35,10 +35,8 @@
 
       <!-- Question Limit -->
       <div class="row mb-3">
-        <label for="questionLimit" class="col-md-6 col-form-label">
-          <span class="d-block">
-            {$_('faq.settings.question_limit')}
-          </span>
+        <label class="col-md-6 col-form-label" for="questionLimit">
+          <span class="d-block">{$_('faq.settings.question_limit')}</span>
           <small>{$_('faq.settings.question_limit_desc')}</small>
         </label>
         <div class="col-md-6">
