@@ -27,13 +27,13 @@
   {:else}
     {#each groupedFAQs as category (category.id)}
       {#if category.items.length > 0}
-        <div class="badge text-bg-gray mx-auto">{category.name}</div>
-        <div class="accordion">
+        <div class="badge text-bg-primary mx-auto">{category.name}</div>
+        <div class="accordion accordion-flush">
           {#each category.items as faq (faq.id)}
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button
-                  class="accordion-button fa-bolder"
+                  class="accordion-button fw-bolder fs-5"
                   type="button"
                   class:collapsed={activeFaqId !== faq.id}
                   on:click={() => toggleFaq(faq.id)}>
@@ -42,7 +42,7 @@
               </h2>
               {#if activeFaqId === faq.id}
                 <div class="accordion-collapse collapse show" transition:slide|local>
-                  <div class="accordion-body">
+                  <div class="accordion-body text-gray">
                     {@html faq.answer}
                   </div>
                 </div>
@@ -57,12 +57,12 @@
       {#if categories.length > 0}
         <div class="badge text-bg-primary mx-auto">{$_('faq.uncategorized')}</div>
       {/if}
-      <div class="accordion">
+      <div class="accordion accordion-flush">
         {#each uncategorizedFAQs as faq (faq.id)}
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
-                class="accordion-button fw-bolder"
+                class="accordion-button fw-bolder fs-5"
                 type="button"
                 class:collapsed={activeFaqId !== faq.id}
                 on:click={() => toggleFaq(faq.id)}>
@@ -71,7 +71,7 @@
             </h2>
             {#if activeFaqId === faq.id}
               <div class="accordion-collapse collapse show" transition:slide|local>
-                <div class="accordion-body">
+                <div class="accordion-body text-gray">
                   {@html faq.answer}
                 </div>
               </div>

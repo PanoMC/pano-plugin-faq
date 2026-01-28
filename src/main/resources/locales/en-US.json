@@ -22,7 +22,7 @@
     "no_faqs": "No FAQs.",
     "no_categories": "No categories found.",
     "settings": {
-      "title": "FAQ Settings",
+      "title": "Preferences",
       "display_location": "Display Location",
       "display_location_desc": "Where should the FAQ link and content be displayed?",
       "location_theme_page": "Theme Page (Navbar Link)",

@@ -22,7 +22,7 @@
     "no_faqs": "Вопросов нет.",
     "no_categories": "Категории не найдены.",
     "settings": {
-      "title": "Настройки FAQ",
+      "title": "Предпочтения",
       "display_location": "Место отображения",
       "display_location_desc": "Где должна отображаться ссылка и контент FAQ?",
       "location_theme_page": "Страница темы (Ссылка в меню)",

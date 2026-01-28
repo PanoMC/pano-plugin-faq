@@ -72,10 +72,6 @@
           class="btn btn-secondary w-100"
           on:click={handleSave}
           disabled={saving || !isFormValid || ($mode === 'edit' && !isDirty)}>
-          {#if saving}
-            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"
-            ></span>
-          {/if}
           {$_('save')}
         </button>
       </div>
