@@ -19,7 +19,10 @@ export default class FAQPlugin extends PanoPlugin {
       pano.ui.addon.onLoad(async (data, event) => {
         if (data.addon.id !== pluginId) return;
         try {
-          const res = await ApiUtil.get({ path: '/api/panel/faq/config' });
+          const res = await ApiUtil.get({
+            path: '/api/panel/faq/config',
+            request: event,
+          });
           data.addon.config = res.config;
         } catch (e) {
           console.error('[FAQ] Failed to load config', e);
@@ -27,7 +30,7 @@ export default class FAQPlugin extends PanoPlugin {
       });
 
       pano.ui.hook.register({
-        name: 'panel:plugin-detail:content',
+        name: `panel:plugin-detail:content:${pluginId}`,
         component: viewComponent(() => import('./panel/components/FAQSettings.svelte')),
         permission: `pano.plugin.${pluginId}.manage.faq`
       });
