@@ -1,14 +1,14 @@
 <div class="container vstack gap-3">
   <!-- Action Menu -->
-  <PageActions leftClasses="d-lg-flex d-none">
-    <CardMenu slot="middle">
-      <CardMenuItem href="/faq" matchingList={['/faq']}>
+  <PageActions>
+    <PageNav slot="left">
+      <PageNavItem href="/faq">
         {$_('faq.list')}
-      </CardMenuItem>
-      <CardMenuItem href="/faq/categories" matchingList={['/faq/categories']}>
+      </PageNavItem>
+      <PageNavItem href="/faq/categories">
         {$_('faq.categories')}
-      </CardMenuItem>
-    </CardMenu>
+      </PageNavItem>
+    </PageNav>
     <div slot="right">
       <button type="button" class="btn btn-secondary" on:click={openAddFAQ}>
         <i class="fas fa-plus"></i>
@@ -134,8 +134,8 @@
     CardFiltersItem,
     NoContent,
     Pagination,
-    CardMenu,
-    CardMenuItem,
+    PageNav,
+    PageNavItem,
   } from '@panomc/sdk/components/panel';
   import { _ } from '../../main';
   import { buildQueryParams as createQueryParams } from '@panomc/sdk/utils/api';
