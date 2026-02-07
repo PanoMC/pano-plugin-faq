@@ -20,7 +20,7 @@
   <div class="card">
     <CardHeader>
       <div slot="left">
-        {categoryCount} Kategori
+        {categoryCount} {$_('faq.category_count_label')}
       </div>
       <div slot="middle" style="width: 250px;">
         <div class="input-group">
@@ -31,7 +31,7 @@
               : ''}"
             bind:value={searchQuery}
             on:input={(e) => onSearchInput(e.target.value)}
-            placeholder="Bul..." />
+            placeholder={$_('faq.search_category')} />
           {#if searching}
             <span class="input-group-text">
               <span class="spinner-border spinner-border-sm text-secondary" role="status"></span>
@@ -75,7 +75,7 @@
 </div>
 
 <script context="module">
-  import ApiUtil, { buildQueryParams } from '@panomc/sdk/utils/api';
+  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
 
   export async function load(event) {
     const {
