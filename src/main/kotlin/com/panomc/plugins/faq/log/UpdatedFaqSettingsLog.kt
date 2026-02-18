@@ -3,13 +3,12 @@ package com.panomc.plugins.faq.log
 import com.panomc.platform.db.model.PluginActivityLog
 import io.vertx.core.json.JsonObject
 
-class UpdatedFAQCategoryLog(
+class UpdatedFaqSettingsLog(
     userId: Long,
     username: String,
-    pluginId: String,
-    name: String
+    pluginId: String
 ) : PluginActivityLog(
     userId = userId,
     pluginId = pluginId,
-    details = JsonObject().put("target", name).put("username", username)
+    details = JsonObject().put("username", username)
 )

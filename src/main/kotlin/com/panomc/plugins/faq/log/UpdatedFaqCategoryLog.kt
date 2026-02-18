@@ -3,7 +3,7 @@ package com.panomc.plugins.faq.log
 import com.panomc.platform.db.model.PluginActivityLog
 import io.vertx.core.json.JsonObject
 
-class DeletedFAQCategoryLog(
+class UpdatedFaqCategoryLog(
     userId: Long,
     username: String,
     pluginId: String,

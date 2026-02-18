@@ -8,8 +8,8 @@ import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.db.dao.FaqCategoryDao
 import com.panomc.plugins.faq.db.model.FaqCategory
-import com.panomc.plugins.faq.log.CreatedFAQCategoryLog
-import com.panomc.plugins.faq.log.UpdatedFAQCategoryLog
+import com.panomc.plugins.faq.log.CreatedFaqCategoryLog
+import com.panomc.plugins.faq.log.UpdatedFaqCategoryLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
@@ -62,10 +62,10 @@ class PanelSaveFAQCategoryAPI(
 
         if (id == null) {
             faqCategoryDao.add(category, sqlClient)
-            databaseManager.panelActivityLogDao.add(CreatedFAQCategoryLog(userId, username, plugin.pluginId, name), sqlClient)
+            databaseManager.panelActivityLogDao.add(CreatedFaqCategoryLog(userId, username, plugin.pluginId, name), sqlClient)
         } else {
             faqCategoryDao.update(category, sqlClient)
-            databaseManager.panelActivityLogDao.add(UpdatedFAQCategoryLog(userId, username, plugin.pluginId, name), sqlClient)
+            databaseManager.panelActivityLogDao.add(UpdatedFaqCategoryLog(userId, username, plugin.pluginId, name), sqlClient)
         }
 
         return Successful()

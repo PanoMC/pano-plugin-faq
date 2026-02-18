@@ -7,7 +7,7 @@ import com.panomc.platform.error.BadRequest
 import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.db.dao.FaqDao
-import com.panomc.plugins.faq.log.DeletedFAQLog
+import com.panomc.plugins.faq.log.DeletedFaqLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
@@ -51,7 +51,7 @@ class PanelDeleteFAQAPI(
 
         val userId = authProvider.getUserIdFromRoutingContext(context)
         val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!
-        databaseManager.panelActivityLogDao.add(DeletedFAQLog(userId, username, plugin.pluginId, faq.question), sqlClient)
+        databaseManager.panelActivityLogDao.add(DeletedFaqLog(userId, username, plugin.pluginId, faq.question), sqlClient)
 
         return Successful()
     }

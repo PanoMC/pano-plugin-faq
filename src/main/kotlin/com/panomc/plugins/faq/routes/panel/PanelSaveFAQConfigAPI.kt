@@ -8,7 +8,7 @@ import com.panomc.platform.db.DatabaseManager
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.config.FAQConfig
 import com.panomc.plugins.faq.config.FAQDisplayLocation
-import com.panomc.plugins.faq.log.UpdatedFAQSettingsLog
+import com.panomc.plugins.faq.log.UpdatedFaqSettingsLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
@@ -56,7 +56,7 @@ class PanelSaveFAQConfigAPI(
         val userId = authProvider.getUserIdFromRoutingContext(context)
         val sqlClient = databaseManager.getSqlClient()
         val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!
-        databaseManager.panelActivityLogDao.add(UpdatedFAQSettingsLog(userId, username, plugin.pluginId), sqlClient)
+        databaseManager.panelActivityLogDao.add(UpdatedFaqSettingsLog(userId, username, plugin.pluginId), sqlClient)
 
         return Successful(mapOf("config" to currentConfig))
     }

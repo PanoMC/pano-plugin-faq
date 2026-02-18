@@ -75,9 +75,9 @@
     "CREATED_FAQ": "<b>{username}</b> yeni bir S.S.S. oluşturdu: {target}.",
     "UPDATED_FAQ": "<b>{username}</b> bir S.S.S. güncelledi: {target}.",
     "DELETED_FAQ": "<b>{username}</b> bir S.S.S. sildi: {target}.",
-    "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir kategori oluşturdu: {target}.",
-    "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi güncelledi: {target}.",
-    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir kategoriyi sildi: {target}.",
+    "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir S.S.S. kategorisi oluşturdu: {target}.",
+    "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir S.S.S. kategorisini güncelledi: {target}.",
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir S.S.S. kategorisini sildi: {target}.",
     "UPDATED_FAQ_SETTINGS": "<b>{username}</b> S.S.S. ayarlarını güncelledi."
   },
   "save": "Kaydet",

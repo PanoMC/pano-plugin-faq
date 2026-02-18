@@ -8,8 +8,8 @@ import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.db.dao.FaqDao
 import com.panomc.plugins.faq.db.model.Faq
-import com.panomc.plugins.faq.log.CreatedFAQLog
-import com.panomc.plugins.faq.log.UpdatedFAQLog
+import com.panomc.plugins.faq.log.CreatedFaqLog
+import com.panomc.plugins.faq.log.UpdatedFaqLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
@@ -68,10 +68,10 @@ class PanelSaveFAQAPI(
 
         if (id == null) {
             faqDao.add(faq, sqlClient)
-            databaseManager.panelActivityLogDao.add(CreatedFAQLog(userId, username, plugin.pluginId, question), sqlClient)
+            databaseManager.panelActivityLogDao.add(CreatedFaqLog(userId, username, plugin.pluginId, question), sqlClient)
         } else {
             faqDao.update(faq, sqlClient)
-            databaseManager.panelActivityLogDao.add(UpdatedFAQLog(userId, username, plugin.pluginId, question), sqlClient)
+            databaseManager.panelActivityLogDao.add(UpdatedFaqLog(userId, username, plugin.pluginId, question), sqlClient)
         }
 
         return Successful()
