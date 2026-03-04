@@ -6,7 +6,7 @@
         type="button"
         class="btn btn-link px-2"
         data-bs-toggle="dropdown"
-        title={$_('actions')}
+        use:tooltip={[$_('actions')]}
         aria-label={$_('actions')}>
         <span class="fas fa-ellipsis-v"></span>
       </button>
@@ -34,6 +34,7 @@
       type="button"
       class="btn btn-link p-0 focus-ring rounded text-decoration-none d-block text-truncate fw-bold w-100 text-start"
       on:click={() => onEdit(faq)}
+      use:tooltip={[$_('faq.edit')]}
       title={faq.question}>
       {faq.question}
     </button>
@@ -41,7 +42,7 @@
 
   <!-- Category -->
   <td class="align-middle text-nowrap">
-    <span class="badge text-bg-primary">
+    <span class="badge {faq.categoryId ? 'text-bg-secondary' : 'text-bg-primary'}">
       {faq.categoryName}
     </span>
   </td>
@@ -63,6 +64,7 @@
 
 <script>
   import { _ } from '../../main';
+  import tooltip from '@panomc/sdk/utils/tooltip';
 
   export let faq;
   export let onEdit;

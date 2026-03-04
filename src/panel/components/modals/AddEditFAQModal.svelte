@@ -7,7 +7,6 @@
           type="button"
           class="btn-close"
           aria-label={$_('buttons.close')}
-          title={$_('buttons.close')}
           on:click={hide}></button>
       </div>
       <div class="modal-body">
@@ -69,7 +68,9 @@
       <div class="modal-footer">
         <button
           type="button"
-          class="btn btn-secondary w-100"
+          class="btn w-100"
+          class:btn-primary={$mode === 'edit'}
+          class:btn-secondary={$mode === 'create'}
           on:click={handleSave}
           disabled={saving || !isFormValid || ($mode === 'edit' && !isDirty)}>
           {$_('save')}
