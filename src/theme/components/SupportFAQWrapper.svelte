@@ -1,14 +1,14 @@
 {#if !loading}
   <div class="mt-5" style:opacity={searching ? 0.6 : 1} style:transition="opacity 0.2s">
     <h2 class="mb-4 text-center">{$_('faq.title')}</h2>
-    <FAQList {faqs} {categories} {config} isSearching={searching} on:search={handleSearch} />
+    <FAQList {faqs} {categories} {config} isSearching={searching} onsearch={handleSearch} />
   </div>
 {/if}
 
-<script context="module">
-  import ApiUtil from '@panomc/sdk/utils/api';
+<script module>
+    import ApiUtil from '@panomc/sdk/utils/api';
 
-  export async function load(event) {
+    export async function load(event) {
     try {
       const res = await ApiUtil.get({
         path: '/api/faq/list',
@@ -27,15 +27,14 @@
   import { _ } from '../../main';
   import FAQList from './FAQList.svelte';
 
-  export let faqs = [];
-  export let categories = [];
-  export let config = {};
+  let { faqs = [], categories = [], config = {} } = $props();
 
-  let loading = faqs.length === 0;
-  let searching = false;
+  let loading = $state(true);
+  let searching = $state(false);
 
-  async function handleSearch(e) {
-    const query = e.detail;
+  $effect(() => { if (faqs.length > 0) loading = false; });
+
+  async function handleSearch(query) {
     searching = true;
     try {
       const res = await ApiUtil.get({

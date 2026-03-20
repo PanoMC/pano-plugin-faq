@@ -1,9 +1,9 @@
 <div class="vstack gap-3">
   <PageTitle title={$_('faq.title')} />
-  <FAQList {faqs} {categories} {config} {search} {isSearching} on:search={handleSearch} />
+  <FAQList {faqs} {categories} {config} {search} {isSearching} onsearch={handleSearch} />
 </div>
 
-<script context="module">
+<script module>
   import ApiUtil from '@panomc/sdk/utils/api';
 
   export async function load(event) {
@@ -46,18 +46,21 @@
   import { goto, page } from '@panomc/sdk/svelte';
   import FAQList from './components/FAQList.svelte';
 
-  export let data;
-  $: ({ faqs, categories, config, search } = data);
+  let { data } = $props();
+  let faqs = $derived(data.faqs);
+  let categories = $derived(data.categories);
+  let config = $derived(data.config);
+  let search = $derived(data.search);
 
-  let isSearching = false;
+  let isSearching = $state(false);
 
-  $: if (data) {
+  $effect(() => {
+    data;
     isSearching = false;
-  }
+  });
 
-  function handleSearch(e) {
+  function handleSearch(query) {
     isSearching = true;
-    const query = e.detail;
     const url = new URL($page.url);
     if (query) {
       url.searchParams.set('search', query);

@@ -17,7 +17,7 @@
           style="width: 300px;"
           placeholder={$_('faq.search')}
           bind:value={searchQuery}
-          on:input={handleSearch} />
+          oninput={handleSearch} />
       </div>
     </div>
   {/if}
@@ -36,12 +36,12 @@
                   class="accordion-button fw-bolder fs-5"
                   type="button"
                   class:collapsed={activeFaqId !== faq.id}
-                  on:click={() => toggleFaq(faq.id)}>
+                  onclick={() => toggleFaq(faq.id)}>
                   {faq.question}
                 </button>
               </h2>
               {#if activeFaqId === faq.id}
-                <div class="accordion-collapse collapse show" transition:slide|local>
+                <div class="accordion-collapse collapse show" transition:slide>
                   <div class="accordion-body text-gray">
                     {@html faq.answer}
                   </div>
@@ -65,12 +65,12 @@
                 class="accordion-button fw-bolder fs-5"
                 type="button"
                 class:collapsed={activeFaqId !== faq.id}
-                on:click={() => toggleFaq(faq.id)}>
+                onclick={() => toggleFaq(faq.id)}>
                 {faq.question}
               </button>
             </h2>
             {#if activeFaqId === faq.id}
-              <div class="accordion-collapse collapse show" transition:slide|local>
+              <div class="accordion-collapse collapse show" transition:slide>
                 <div class="accordion-body text-gray">
                   {@html faq.answer}
                 </div>
@@ -84,22 +84,17 @@
 </div>
 
 <script>
-  import { slide } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
-  import { _ } from '../../main';
-  import { NoContent } from '@panomc/sdk/components/theme';
+  import {slide} from 'svelte/transition';
+  import {_} from '../../main';
+  import {NoContent} from '@panomc/sdk/components/theme';
 
-  const dispatch = createEventDispatcher();
+  let { faqs = [], categories = [], config = { showSearch: true, questionLimit: 0 }, search = '', isSearching = false, onsearch } = $props();
 
-  export let faqs = [];
-  export let categories = [];
-  export let config = { showSearch: true, questionLimit: 0 };
-  export let search = '';
-  export let isSearching = false;
-
-  let searchQuery = search;
-  let activeFaqId = null;
+  let searchQuery = $state('');
+  let activeFaqId = $state(null);
   let searchTimeout;
+
+  $effect(() => { searchQuery = search; });
 
   function toggleFaq(id) {
     if (activeFaqId === id) {
@@ -112,19 +107,19 @@
   function handleSearch() {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-      dispatch('search', searchQuery);
+      if (onsearch) onsearch(searchQuery);
     }, 500);
   }
 
-  $: limit = config.questionLimit && config.questionLimit > 0 ? config.questionLimit : Infinity;
+  let limit = $derived(config.questionLimit && config.questionLimit > 0 ? config.questionLimit : Infinity);
 
   // Filter Logic - Server side handles search, but we might still have a limit
-  $: filteredFAQs = faqs.slice(0, limit);
+  let filteredFAQs = $derived(faqs.slice(0, limit));
 
-  $: groupedFAQs = categories.map((cat) => ({
+  let groupedFAQs = $derived(categories.map((cat) => ({
     ...cat,
     items: filteredFAQs.filter((f) => f.categoryId === cat.id),
-  }));
+  })));
 
-  $: uncategorizedFAQs = filteredFAQs.filter((f) => !f.categoryId);
+  let uncategorizedFAQs = $derived(filteredFAQs.filter((f) => !f.categoryId));
 </script>

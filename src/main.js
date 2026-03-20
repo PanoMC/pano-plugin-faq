@@ -1,7 +1,7 @@
-import { PanoPlugin } from '@panomc/sdk';
-import { derived } from 'svelte/store';
-import { _ as i18n } from '@panomc/sdk/utils/language';
-import { viewComponent } from '@panomc/sdk/utils/component';
+import {PanoPlugin} from '@panomc/sdk';
+import {derived} from 'svelte/store';
+import {_ as i18n} from '@panomc/sdk/utils/language';
+import {viewComponent} from '@panomc/sdk/utils/component';
 import ApiUtil from '@panomc/sdk/utils/api';
 
 const pluginId = 'pano-plugin-faq';
@@ -67,12 +67,10 @@ export default class FAQPlugin extends PanoPlugin {
       });
 
     } else {
-      // Theme logic
-
-      // 2. Fetch config to know where to show links
-      (async () => {
+      // Theme logic — fetch config via lifecycle for proper SSR context and parallel execution
+      pano.ui.app.onLoad(async (data, event) => {
         try {
-          const res = await ApiUtil.get({ path: '/api/faq/list' });
+          const res = await ApiUtil.get({ path: '/api/faq/list', request: event });
           const config = res.config;
 
           if (config.displayLocation === 'THEME_PAGE') {
@@ -104,7 +102,7 @@ export default class FAQPlugin extends PanoPlugin {
         } catch (e) {
           console.error('[FAQ Plugin] Failed to init theme logic', e);
         }
-      })();
+      });
     }
   }
 
