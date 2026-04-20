@@ -1,12 +1,11 @@
 <div class="vstack gap-3">
-  <PageTitle title={$_('faq.title')} />
   <FAQList {faqs} {categories} {config} {search} {isSearching} onsearch={handleSearch} />
 </div>
 
 <script module>
-  import ApiUtil from '@panomc/sdk/utils/api';
+    import ApiUtil from '@panomc/sdk/utils/api';
 
-  export async function load(event) {
+    export async function load(event) {
     const {
       url: { searchParams },
     } = event;
@@ -25,6 +24,7 @@
           config: res.config,
           search,
         },
+        pageTitle: 'plugins.pano-plugin-faq.faq.title',
       };
     } catch (e) {
       console.error('[FAQ] Failed to load data', e);
@@ -35,6 +35,7 @@
           config: {},
           search: '',
         },
+        pageTitle: 'plugins.pano-plugin-faq.faq.title',
       };
     }
   }
@@ -42,7 +43,6 @@
 
 <script>
   import { _ } from '../main';
-  import { PageTitle } from '@panomc/sdk/components/theme';
   import { goto, page } from '@panomc/sdk/svelte';
   import FAQList from './components/FAQList.svelte';
 
