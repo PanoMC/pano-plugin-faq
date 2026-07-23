@@ -25,12 +25,13 @@ class FAQPlugin : PanoPlugin() {
 
     internal suspend fun startPlugin() {
         if (isInitialized) return
-        isInitialized = true
 
         if (!setupManager.isSetupDone()) {
             logger.info("Setup is not finished, waiting for setup completion...")
             return
         }
+
+        isInitialized = true
 
         val configManager = PluginConfigManager(this, FAQConfig::class.java)
         pluginBeanContext.beanFactory.registerSingleton(PluginConfigManager::class.java.name, configManager)
