@@ -34,8 +34,7 @@
       type="button"
       class="btn btn-link p-0 focus-ring rounded text-decoration-none d-block text-truncate fw-bold w-100 text-start"
       on:click={() => onEdit(faq)}
-      use:tooltip={[$_('faq.edit')]}
-      title={faq.question}>
+      use:tooltip={[$_('faq.edit')]}>
       {faq.question}
     </button>
   </td>
