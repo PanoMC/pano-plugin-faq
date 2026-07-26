@@ -127,9 +127,8 @@
 </script>
 
 <script>
-  import { showToast } from '@panomc/sdk/toasts';
   import ApiUtil from '@panomc/sdk/utils/api';
-  import { _ } from '../../../main';
+  import { _, showErrorToast, showSuccessToast } from '../../../main';
 
   let saving = false;
 
@@ -139,7 +138,7 @@
 
   async function handleSave() {
     if (!isFormValid) {
-      showToast($_('errors.fields_required'));
+      showErrorToast($_('errors.fields_required'));
       return;
     }
 
@@ -161,12 +160,14 @@
         body,
       });
 
-      showToast($mode === 'create' ? $_('faq.toasts.faq_added') : $_('faq.toasts.faq_updated'));
+      showSuccessToast(
+        $mode === 'create' ? $_('faq.toasts.faq_added') : $_('faq.toasts.faq_updated'),
+      );
       callback();
       hide();
     } catch (e) {
       console.error(e);
-      showToast($_('error'));
+      showErrorToast($_('error'));
     } finally {
       saving = false;
     }

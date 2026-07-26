@@ -64,8 +64,7 @@
 
 <script>
   import ApiUtil from '@panomc/sdk/utils/api';
-  import { _ } from '../../main';
-  import { showToast } from '@panomc/sdk/toasts';
+  import { _, showErrorToast, showSuccessToast } from '../../main';
 
   export let addon;
 
@@ -87,9 +86,9 @@
       await ApiUtil.post({ path: '/api/panel/faq/config', body: config });
       if (addon) addon.config = config;
       initialConfig = JSON.stringify(config);
-      showToast($_('faq.settings.saved'));
+      showSuccessToast($_('faq.settings.saved'));
     } catch (e) {
-      showToast($_('error'));
+      showErrorToast($_('error'));
     } finally {
       saving = false;
     }

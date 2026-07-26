@@ -26,9 +26,8 @@
 </script>
 
 <script>
-    import { showToast } from '@panomc/sdk/toasts';
     import ApiUtil from '@panomc/sdk/utils/api';
-    import { _ } from '../../../main';
+    import { _, showErrorToast, showSuccessToast } from '../../../main';
 
     let deleting = false;
 
@@ -39,12 +38,12 @@
                 path: '/api/panel/faq/delete',
                 body: { id: $faq.id }
             });
-            showToast($_('faq.toasts.faq_deleted'));
+            showSuccessToast($_('faq.toasts.faq_deleted'));
             callback();
             hide();
         } catch (e) {
             console.error(e);
-            showToast($_('error'));
+            showErrorToast($_('error'));
         } finally {
             deleting = false;
         }
