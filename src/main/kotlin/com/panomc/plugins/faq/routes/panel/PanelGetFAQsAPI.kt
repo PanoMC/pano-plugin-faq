@@ -8,9 +8,10 @@ import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.db.dao.FaqCategoryDao
 import com.panomc.plugins.faq.db.dao.FaqDao
 import com.panomc.plugins.faq.permission.ManageFAQPermission
+import com.panomc.plugins.faq.util.PageInfo
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 
 @Endpoint
@@ -19,7 +20,7 @@ class PanelGetFAQsAPI(
     private val faqDao: FaqDao,
     private val faqCategoryDao: FaqCategoryDao
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/faq/list", RouteType.GET))
+    override val paths = listOf(Path("/list", RouteType.GET))
 
     private val authProvider by lazy { plugin.applicationContext.getBean(AuthProvider::class.java) }
     private val databaseManager by lazy { plugin.applicationContext.getBean(DatabaseManager::class.java) }
@@ -47,11 +48,9 @@ class PanelGetFAQsAPI(
         val faqCount = faqDao.count(status, search, sqlClient)
 
         return Successful(mapOf(
-            "faqs" to faqs,
+            "items" to faqs,
             "categories" to categories,
-            "faqCount" to faqCount,
-            "totalPage" to Math.ceil(faqCount.toDouble() / 10).toInt(),
-            "page" to page
+            "page" to PageInfo.of(page, 10, faqCount)
         ))
     }
 }

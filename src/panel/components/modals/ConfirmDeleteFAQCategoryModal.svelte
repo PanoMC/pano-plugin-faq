@@ -26,7 +26,7 @@
 </script>
 
 <script>
-    import ApiUtil from '@panomc/sdk/utils/api';
+    import { api } from '@panomc/sdk/plugin-api';
     import { _, showErrorToast, showSuccessToast } from '../../../main';
 
     let deleting = false;
@@ -34,8 +34,8 @@
     async function handleDelete() {
         deleting = true;
         try {
-            await ApiUtil.post({
-                path: '/api/panel/faq/category/delete',
+            await api.panel.post({
+                path: '/category/delete',
                 body: { id: $category.id }
             });
             showSuccessToast($_('faq.toasts.category_deleted'));

@@ -1,0 +1,74 @@
+[
+  {
+    "method": "GET",
+    "old": "/api/faq/list",
+    "new": "/api/plugins/pano-plugin-faq/list",
+    "relative": "/plugins/pano-plugin-faq/list",
+    "class": "GetFAQsAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/api/GetFAQsAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/faq/category/delete",
+    "new": "/api/plugins/pano-plugin-faq/panel/category/delete",
+    "relative": "/plugins/pano-plugin-faq/panel/category/delete",
+    "class": "PanelDeleteFAQCategoryAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelDeleteFAQCategoryAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/panel/faq/category/list",
+    "new": "/api/plugins/pano-plugin-faq/panel/category/list",
+    "relative": "/plugins/pano-plugin-faq/panel/category/list",
+    "class": "PanelGetFAQCategoriesAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelGetFAQCategoriesAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/faq/category/save",
+    "new": "/api/plugins/pano-plugin-faq/panel/category/save",
+    "relative": "/plugins/pano-plugin-faq/panel/category/save",
+    "class": "PanelSaveFAQCategoryAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelSaveFAQCategoryAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/panel/faq/config",
+    "new": "/api/plugins/pano-plugin-faq/panel/config",
+    "relative": "/plugins/pano-plugin-faq/panel/config",
+    "class": "PanelGetFAQConfigAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelGetFAQConfigAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/faq/config",
+    "new": "/api/plugins/pano-plugin-faq/panel/config",
+    "relative": "/plugins/pano-plugin-faq/panel/config",
+    "class": "PanelSaveFAQConfigAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelSaveFAQConfigAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/faq/delete",
+    "new": "/api/plugins/pano-plugin-faq/panel/delete",
+    "relative": "/plugins/pano-plugin-faq/panel/delete",
+    "class": "PanelDeleteFAQAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelDeleteFAQAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/panel/faq/list",
+    "new": "/api/plugins/pano-plugin-faq/panel/list",
+    "relative": "/plugins/pano-plugin-faq/panel/list",
+    "class": "PanelGetFAQsAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelGetFAQsAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/faq/save",
+    "new": "/api/plugins/pano-plugin-faq/panel/save",
+    "relative": "/plugins/pano-plugin-faq/panel/save",
+    "class": "PanelSaveFAQAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/faq/routes/panel/PanelSaveFAQAPI.kt"
+  }
+]

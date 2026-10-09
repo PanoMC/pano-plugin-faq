@@ -10,8 +10,10 @@ import com.panomc.plugins.faq.db.dao.FaqCategoryDao
 import com.panomc.plugins.faq.db.dao.FaqDao
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
+import com.panomc.platform.schema.EndpointDoc
+import io.vertx.json.schema.common.dsl.Schemas.*
 
 @Endpoint
 class GetFAQsAPI(
@@ -19,7 +21,41 @@ class GetFAQsAPI(
     private val faqDao: FaqDao,
     private val faqCategoryDao: FaqCategoryDao
 ) : Api() {
-    override val paths = listOf(Path("/api/faq/list", RouteType.GET))
+    override val paths = listOf(Path("/list", RouteType.GET))
+
+    override val doc = EndpointDoc(
+        summary = "The active questions with their categories and the display settings; ?search= filters the questions.",
+        tag = "faq",
+        response = objectSchema()
+            .requiredProperty(
+                "faqs",
+                arraySchema().items(
+                    objectSchema()
+                        .requiredProperty("id", intSchema())
+                        .requiredProperty("question", stringSchema())
+                        .requiredProperty("answer", stringSchema())
+                        .optionalProperty("categoryId", intSchema().nullable())
+                        .optionalProperty("displayOrder", intSchema())
+                        .optionalProperty("active", booleanSchema())
+                )
+            )
+            .requiredProperty(
+                "categories",
+                arraySchema().items(
+                    objectSchema()
+                        .requiredProperty("id", intSchema())
+                        .requiredProperty("name", stringSchema())
+                        .optionalProperty("displayOrder", intSchema())
+                )
+            )
+            .requiredProperty(
+                "config",
+                objectSchema()
+                    .requiredProperty("displayLocation", stringSchema())
+                    .requiredProperty("showSearch", booleanSchema())
+                    .requiredProperty("questionLimit", intSchema())
+            )
+    )
 
     private val databaseManager by lazy { plugin.applicationContext.getBean(DatabaseManager::class.java) }
     private val configManager by lazy {

@@ -64,7 +64,7 @@
         </table>
       </div>
       <div class="card-footer">
-        <Pagination page={data.page} {totalPage} on:change={onPageChange} />
+        <Pagination page={data.page} on:change={onPageChange} />
       </div>
     {/if}
   </div>
@@ -75,7 +75,8 @@
 </div>
 
 <script context="module">
-  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
+  import {buildQueryParams} from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
 
   export async function load(event) {
     const {
@@ -94,8 +95,8 @@
     });
 
     try {
-      const res = await ApiUtil.get({
-        path: '/api/panel/faq/category/list' + queryParams,
+      const res = await api.panel.get({
+        path: '/category/list' + queryParams,
         request: event,
       });
 
@@ -105,7 +106,7 @@
     } catch (e) {
       console.error('[FAQ] Failed to load data', e);
       return {
-        data: { categories: [], categoryCount: 0, totalPage: 1, page: 1 },
+        data: { items: [], page: { number: 1, size: 10, totalItems: 0, totalPages: 0 } },
       };
     }
   }
@@ -136,7 +137,8 @@
 
   export let data;
 
-  $: ({ categories, categoryCount, totalPage } = data);
+  $: ({ items: categories } = data);
+  $: categoryCount = data.page.totalItems;
   $: searchQuery = $page.url.searchParams.get('search') || '';
 
   let searchTimeout;
@@ -144,7 +146,7 @@
 
   async function refreshData() {
     searching = true;
-    const pageNum = data.page === 1 ? null : data.page;
+    const pageNum = data.page.number === 1 ? null : data.page.number;
     const searchVal = searchQuery || null;
 
     const queryParams = createQueryParams({
@@ -165,7 +167,7 @@
 
   function onSearchInput(value) {
     searchQuery = value;
-    data.page = 1;
+    data.page = { ...data.page, number: 1 };
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       refreshData();
@@ -188,7 +190,7 @@
   }
 
   function onPageChange(e) {
-    data.page = e.detail;
+    data.page = { ...data.page, number: e.detail };
     refreshData();
   }
 </script>

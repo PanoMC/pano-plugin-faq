@@ -1,9 +1,9 @@
-<div class="vstack gap-3">
+<div class="faq-faq-page vstack gap-3">
   <FAQList {faqs} {categories} {config} {search} {isSearching} onsearch={handleSearch} />
 </div>
 
 <script module>
-    import ApiUtil from '@panomc/sdk/utils/api';
+    import { api } from '@panomc/sdk/plugin-api';
 
     export async function load(event) {
     const {
@@ -12,8 +12,8 @@
     const search = searchParams.get('search') || '';
 
     try {
-      const res = await ApiUtil.get({
-        path: '/api/faq/list' + (search ? `?search=${encodeURIComponent(search)}` : ''),
+      const res = await api.get({
+        path: '/list' + (search ? `?search=${encodeURIComponent(search)}` : ''),
         request: event,
       });
 
@@ -42,9 +42,8 @@
 </script>
 
 <script>
-  import { _ } from '../main';
   import { goto, page } from '@panomc/sdk/svelte';
-  import FAQList from './components/FAQList.svelte';
+  import FAQList from './FAQList.svelte';
 
   let { data } = $props();
   let faqs = $derived(data.faqs);

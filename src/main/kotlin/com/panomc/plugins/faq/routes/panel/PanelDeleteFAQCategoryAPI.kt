@@ -12,8 +12,8 @@ import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.Bodies
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.Bodies
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 import io.vertx.json.schema.common.dsl.Schemas.numberSchema
 import io.vertx.json.schema.common.dsl.Schemas.objectSchema
@@ -23,7 +23,7 @@ class PanelDeleteFAQCategoryAPI(
     private val plugin: FAQPlugin,
     private val faqCategoryDao: FaqCategoryDao
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/faq/category/delete", RouteType.POST))
+    override val paths = listOf(Path("/category/delete", RouteType.POST))
 
     private val authProvider by lazy { plugin.applicationContext.getBean(AuthProvider::class.java) }
     private val databaseManager by lazy { plugin.applicationContext.getBean(DatabaseManager::class.java) }

@@ -76,7 +76,7 @@
         </table>
       </div>
       <div class="card-footer">
-        <Pagination page={data.page} {totalPage} on:change={onPageChange} />
+        <Pagination page={data.page} on:change={onPageChange} />
       </div>
     {/if}
   </div>
@@ -87,7 +87,8 @@
 </div>
 
 <script context="module">
-  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
+  import {buildQueryParams} from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
 
   export async function load(event) {
     const {
@@ -108,8 +109,8 @@
     });
 
     try {
-      const res = await ApiUtil.get({
-        path: '/api/panel/faq/list' + queryParams,
+      const res = await api.panel.get({
+        path: '/list' + queryParams,
         request: event,
       });
 
@@ -119,7 +120,7 @@
     } catch (e) {
       console.error('[FAQ] Failed to load data', e);
       return {
-        data: { faqs: [], categories: [], faqCount: 0, totalPage: 1, page: 1 },
+        data: { items: [], categories: [], page: { number: 1, size: 10, totalItems: 0, totalPages: 0 } },
       };
     }
   }
@@ -152,7 +153,8 @@
 
   export let data;
 
-  $: ({ faqs, categories, faqCount, totalPage } = data);
+  $: ({ items: faqs, categories } = data);
+  $: faqCount = data.page.totalItems;
   $: currentStatus = $page.url.searchParams.get('status') || 'ALL';
   $: searchQuery = $page.url.searchParams.get('search') || '';
 
@@ -161,7 +163,7 @@
 
   async function refreshData() {
     searching = true;
-    const pageNum = data.page === 1 ? null : data.page;
+    const pageNum = data.page.number === 1 ? null : data.page.number;
     const statusVal = $page.url.searchParams.get('status');
     const searchVal = searchQuery || null;
 
@@ -184,7 +186,7 @@
 
   function onSearchInput(value) {
     searchQuery = value;
-    data.page = 1;
+    data.page = { ...data.page, number: 1 };
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       refreshData();
@@ -215,7 +217,7 @@
   $: paginatedItems = flatList; // Data is already paginated by server
 
   async function onPageChange(e) {
-    data.page = e.detail;
+    data.page = { ...data.page, number: e.detail };
     await refreshData();
   }
 </script>

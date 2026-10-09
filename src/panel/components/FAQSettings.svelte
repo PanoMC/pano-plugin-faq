@@ -63,7 +63,7 @@
 {/if}
 
 <script>
-  import ApiUtil from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
   import { _, showErrorToast, showSuccessToast } from '../../main';
 
   export let addon;
@@ -83,7 +83,7 @@
     try {
       // Ensure questionLimit is a number
       config.questionLimit = parseInt(config.questionLimit) || 0;
-      await ApiUtil.post({ path: '/api/panel/faq/config', body: config });
+      await api.panel.post({ path: '/config', body: config });
       if (addon) addon.config = config;
       initialConfig = JSON.stringify(config);
       showSuccessToast($_('faq.settings.saved'));

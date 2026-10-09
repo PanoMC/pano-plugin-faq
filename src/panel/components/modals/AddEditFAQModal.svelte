@@ -127,7 +127,7 @@
 </script>
 
 <script>
-  import ApiUtil from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
   import { _, showErrorToast, showSuccessToast } from '../../../main';
 
   let saving = false;
@@ -155,8 +155,8 @@
       if ($faq.id) body.id = $faq.id;
       if ($faq.categoryId) body.categoryId = $faq.categoryId;
 
-      await ApiUtil.post({
-        path: '/api/panel/faq/save',
+      await api.panel.post({
+        path: '/save',
         body,
       });
 

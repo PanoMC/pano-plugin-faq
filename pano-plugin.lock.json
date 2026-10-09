@@ -1,0 +1,72 @@
+{
+  "controllers": {},
+  "format": 1,
+  "views": {
+    "faq:FAQList": {
+      "classes": [
+        "faq-faq-list",
+        "faq-faq-list__badge",
+        "faq-faq-list__input",
+        "faq-faq-list__title",
+        "faq-faq-list__title-2",
+        "faq-faq-list__uncategorized"
+      ],
+      "contract": 1,
+      "hooks": [],
+      "props": {
+        "categories": {
+          "required": false
+        },
+        "config": {
+          "required": false
+        },
+        "faqs": {
+          "required": false
+        },
+        "isSearching": {
+          "required": false
+        },
+        "onsearch": {
+          "required": true
+        },
+        "search": {
+          "required": false
+        }
+      },
+      "slots": []
+    },
+    "faq:FAQPage": {
+      "classes": [
+        "faq-faq-page"
+      ],
+      "contract": 1,
+      "hooks": [],
+      "props": {
+        "data": {
+          "required": true
+        }
+      },
+      "slots": []
+    },
+    "faq:SupportFAQWrapper": {
+      "classes": [
+        "faq-support-faq-wrapper",
+        "faq-support-faq-wrapper__title"
+      ],
+      "contract": 1,
+      "hooks": [],
+      "props": {
+        "categories": {
+          "required": false
+        },
+        "config": {
+          "required": false
+        },
+        "faqs": {
+          "required": false
+        }
+      },
+      "slots": []
+    }
+  }
+}

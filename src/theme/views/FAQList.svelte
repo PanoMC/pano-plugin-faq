@@ -1,4 +1,4 @@
-<div class="faq-list vstack gap-3">
+<div class="faq-faq-list faq-list vstack gap-3">
   {#if config.showSearch}
     <div class="d-flex justify-content-center">
       <div class="position-relative">
@@ -13,7 +13,7 @@
         </div>
         <input
           type="text"
-          class="form-control rounded-pill ps-5"
+          class="faq-faq-list__input form-control rounded-pill ps-5"
           style="width: 300px;"
           placeholder={$_('faq.search')}
           bind:value={searchQuery}
@@ -27,11 +27,11 @@
   {:else}
     {#each groupedFAQs as category (category.id)}
       {#if category.items.length > 0}
-        <div class="badge text-bg-primary mx-auto">{category.name}</div>
+        <div class="faq-faq-list__badge badge text-bg-primary mx-auto">{category.name}</div>
         <div class="accordion accordion-flush">
           {#each category.items as faq (faq.id)}
             <div class="accordion-item">
-              <h2 class="accordion-header">
+              <h2 class="faq-faq-list__title accordion-header">
                 <button
                   class="accordion-button fw-bolder fs-5"
                   type="button"
@@ -55,12 +55,12 @@
 
     {#if uncategorizedFAQs.length > 0}
       {#if categories.length > 0}
-        <div class="badge text-bg-primary mx-auto">{$_('faq.uncategorized')}</div>
+        <div class="faq-faq-list__uncategorized badge text-bg-primary mx-auto">{$_('faq.uncategorized')}</div>
       {/if}
       <div class="accordion accordion-flush">
         {#each uncategorizedFAQs as faq (faq.id)}
           <div class="accordion-item">
-            <h2 class="accordion-header">
+            <h2 class="faq-faq-list__title-2 accordion-header">
               <button
                 class="accordion-button fw-bolder fs-5"
                 type="button"
@@ -85,8 +85,12 @@
 
 <script>
   import {slide} from 'svelte/transition';
-  import {_} from '../../main';
+  import { derived } from 'svelte/store';
+  import { _ as i18n } from '@panomc/sdk/utils/language';
   import {NoContent} from '@panomc/sdk/components/theme';
+
+  // plugin translations: $_('key') reads plugins.pano-plugin-faq.key
+  const _ = derived(i18n, ($_fn) => (key, options) => $_fn(`plugins.pano-plugin-faq.${key}`, options));
 
   let { faqs = [], categories = [], config = { showSearch: true, questionLimit: 0 }, search = '', isSearching = false, onsearch } = $props();
 

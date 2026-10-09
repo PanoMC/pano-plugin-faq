@@ -2,7 +2,7 @@ import {PanoPlugin} from '@panomc/sdk';
 import {derived} from 'svelte/store';
 import {_ as i18n} from '@panomc/sdk/utils/language';
 import {viewComponent} from '@panomc/sdk/utils/component';
-import ApiUtil from '@panomc/sdk/utils/api';
+import { api } from '@panomc/sdk/plugin-api';
 import { showToast } from '@panomc/sdk/toasts';
 
 const pluginId = 'pano-plugin-faq';
@@ -36,8 +36,8 @@ export default class FAQPlugin extends PanoPlugin {
       pano.ui.addon.onLoad(async (data, event) => {
         if (data.addon.id !== pluginId) return;
         try {
-          const res = await ApiUtil.get({
-            path: '/api/panel/faq/config',
+          const res = await api.panel.get({
+            path: '/config',
             request: event,
           });
           data.addon.config = res.config;
@@ -87,13 +87,13 @@ export default class FAQPlugin extends PanoPlugin {
       // Theme logic — fetch config via lifecycle for proper SSR context and parallel execution
       pano.ui.app.onLoad(async (data, event) => {
         try {
-          const res = await ApiUtil.get({ path: '/api/faq/list', request: event });
+          const res = await api.get({ path: '/list', request: event });
           const config = res.config;
 
           if (config.displayLocation === 'THEME_PAGE') {
             pano.ui.page.register({
               path: '/faq',
-              component: viewComponent(() => import('./theme/FAQPage.svelte'))
+              view: 'faq:FAQPage'
             });
 
             pano.ui.nav.site.editNavLinks((navItems) => {
@@ -113,7 +113,7 @@ export default class FAQPlugin extends PanoPlugin {
             // Inject into Support Page if hook exists
             pano.ui.hook.register({
               name: 'theme:support:content',
-              component: viewComponent(() => import('./theme/components/SupportFAQWrapper.svelte'))
+              view: 'faq:SupportFAQWrapper'
             });
           }
         } catch (e) {
