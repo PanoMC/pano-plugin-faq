@@ -8,6 +8,8 @@ abstract class FaqDao : Dao<Faq>(Faq::class.java) {
     abstract suspend fun add(faq: Faq, sqlClient: SqlClient): Long
     abstract suspend fun update(faq: Faq, sqlClient: SqlClient)
     abstract suspend fun deleteById(id: Long, sqlClient: SqlClient)
+    /** Moves every FAQ of [categoryId] to "no category", so they stay visible once the category is gone. */
+    abstract suspend fun clearCategory(categoryId: Long, sqlClient: SqlClient)
     abstract suspend fun getById(id: Long, sqlClient: SqlClient): Faq?
     abstract suspend fun getAll(page: Long, status: Boolean?, search: String?, sqlClient: SqlClient): List<Faq>
     abstract suspend fun count(status: Boolean?, search: String?, sqlClient: SqlClient): Long

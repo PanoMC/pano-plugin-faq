@@ -7,6 +7,7 @@ import com.panomc.platform.error.BadRequest
 import com.panomc.platform.model.*
 import com.panomc.plugins.faq.FAQPlugin
 import com.panomc.plugins.faq.db.dao.FaqCategoryDao
+import com.panomc.plugins.faq.db.dao.FaqDao
 import com.panomc.plugins.faq.log.DeletedFaqCategoryLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
 import io.vertx.ext.web.RoutingContext
@@ -21,7 +22,8 @@ import io.vertx.json.schema.common.dsl.Schemas.objectSchema
 @Endpoint
 class PanelDeleteFAQCategoryAPI(
     private val plugin: FAQPlugin,
-    private val faqCategoryDao: FaqCategoryDao
+    private val faqCategoryDao: FaqCategoryDao,
+    private val faqDao: FaqDao
 ) : PanelApi() {
     override val paths = listOf(Path("/category/delete", RouteType.POST))
 
@@ -47,6 +49,7 @@ class PanelDeleteFAQCategoryAPI(
         val sqlClient = databaseManager.getSqlClient()
         val category = faqCategoryDao.getById(id, sqlClient) ?: throw BadRequest()
 
+        faqDao.clearCategory(id, sqlClient)
         faqCategoryDao.deleteById(id, sqlClient)
 
         val userId = authProvider.getUserIdFromRoutingContext(context)

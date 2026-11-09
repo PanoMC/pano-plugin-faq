@@ -125,5 +125,8 @@
     items: filteredFAQs.filter((f) => f.categoryId === cat.id),
   })));
 
-  let uncategorizedFAQs = $derived(filteredFAQs.filter((f) => !f.categoryId));
+  // FAQs without a category, or whose category was deleted, show under "uncategorized"
+  let uncategorizedFAQs = $derived(
+    filteredFAQs.filter((f) => !f.categoryId || !categories.some((cat) => cat.id === f.categoryId))
+  );
 </script>

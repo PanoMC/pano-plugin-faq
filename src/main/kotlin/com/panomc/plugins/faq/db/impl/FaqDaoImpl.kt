@@ -58,6 +58,11 @@ class FaqDaoImpl : FaqDao() {
         sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
     }
 
+    override suspend fun clearCategory(categoryId: Long, sqlClient: SqlClient) {
+        val query = "UPDATE `${getTablePrefix() + tableName}` SET `categoryId` = NULL WHERE `categoryId` = ?"
+        sqlClient.preparedQuery(query).execute(Tuple.of(categoryId)).coAwait()
+    }
+
     override suspend fun getById(id: Long, sqlClient: SqlClient): Faq? {
         val query = "SELECT ${fields.toTableQuery()} FROM `${getTablePrefix() + tableName}` WHERE `id` = ?"
         val rows = sqlClient.preparedQuery(query).execute(Tuple.of(id)).coAwait()
