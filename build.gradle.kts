@@ -106,6 +106,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     compileOnly("org.springframework:spring-context:${springContextVersion}")
+
+    // HTML cleaning of content saved by non-admin panel users (shaded into the plugin jar)
+    implementation("org.jsoup:jsoup:1.21.1")
 }
 
 tasks {

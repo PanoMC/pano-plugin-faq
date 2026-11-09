@@ -11,6 +11,7 @@ import com.panomc.plugins.faq.db.model.Faq
 import com.panomc.plugins.faq.log.CreatedFaqLog
 import com.panomc.plugins.faq.log.UpdatedFaqLog
 import com.panomc.plugins.faq.permission.ManageFAQPermission
+import com.panomc.plugins.faq.util.SafeHtml
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
 import io.vertx.ext.web.validation.ValidationHandler
@@ -61,7 +62,8 @@ class PanelSaveFAQAPI(
         }
 
         val sqlClient = databaseManager.getSqlClient()
-        val faq = Faq(id, question, answer, categoryId, displayOrder, active)
+        // Admins may save any HTML; other FAQ editors get it cleaned of scripts
+        val faq = Faq(id, question, SafeHtml.forCaller(answer, authProvider, context) ?: answer, categoryId, displayOrder, active)
 
         val userId = authProvider.getUserIdFromRoutingContext(context)
         val username = databaseManager.userDao.getUsernameFromUserId(userId, sqlClient)!!
