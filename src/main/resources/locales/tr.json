@@ -93,5 +93,8 @@
   },
   "all": "Tümü",
   "active": "Aktif",
-  "inactive": "Pasif"
+  "inactive": "Pasif",
+  "buttons": {
+    "close": "Kapat"
+  }
 }

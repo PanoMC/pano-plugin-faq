@@ -93,5 +93,8 @@
   },
   "all": "All",
   "active": "Active",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "buttons": {
+    "close": "Close"
+  }
 }
