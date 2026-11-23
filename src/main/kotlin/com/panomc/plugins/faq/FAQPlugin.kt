@@ -26,15 +26,19 @@ class FAQPlugin : PanoPlugin() {
     internal suspend fun startPlugin() {
         if (isInitialized) return
 
+        // The config file does not need the database: it is there before setup is done, so the config endpoints
+        // work from the start (they failed with a missing bean until setup was finished).
+        if (!pluginBeanContext.beanFactory.containsSingleton(PluginConfigManager::class.java.name)) {
+            val configManager = PluginConfigManager(this, FAQConfig::class.java)
+            pluginBeanContext.beanFactory.registerSingleton(PluginConfigManager::class.java.name, configManager)
+        }
+
         if (!setupManager.isSetupDone()) {
             logger.info("Setup is not finished, waiting for setup completion...")
             return
         }
 
         isInitialized = true
-
-        val configManager = PluginConfigManager(this, FAQConfig::class.java)
-        pluginBeanContext.beanFactory.registerSingleton(PluginConfigManager::class.java.name, configManager)
 
         pluginDatabaseManager.initialize(this)
         
