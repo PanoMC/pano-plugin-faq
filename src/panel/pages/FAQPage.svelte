@@ -20,7 +20,7 @@
   <div class="card">
     <CardHeader>
       <div slot="left">
-        {faqCount} {$_('faq.count_label')}
+        {$_('faq.count', { values: { count: faqCount } })}
       </div>
       <div slot="middle" style="width: 250px;">
         <div class="input-group">
@@ -44,10 +44,10 @@
           {$_('all')}
         </CardFiltersItem>
         <CardFiltersItem href={`/faq?status=ACTIVE`} active={currentStatus === 'ACTIVE'}>
-          {$_('active')}
+          {$_('filters.active')}
         </CardFiltersItem>
         <CardFiltersItem href={`/faq?status=INACTIVE`} active={currentStatus === 'INACTIVE'}>
-          {$_('inactive')}
+          {$_('filters.inactive')}
         </CardFiltersItem>
       </CardFilters>
     </CardHeader>

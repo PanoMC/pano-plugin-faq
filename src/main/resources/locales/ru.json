@@ -1,7 +1,6 @@
 {
   "faq": {
     "title": "FAQ",
-    "description": "Создавайте и управляйте часто задаваемыми вопросами.",
     "list": "Вопросы",
     "categories": "Категории",
     "search": "Поиск вопросов...",
@@ -10,27 +9,23 @@
     "add_category": "Добавить категорию",
     "edit_faq": "Редактировать FAQ",
     "edit_category": "Редактировать категорию",
-    "delete_faq": "Удалить",
-    "delete_category": "Удалить",
     "edit": "Редактировать",
     "delete": "Удалить",
     "question": "Вопрос",
-    "count_label": "Вопросов",
+    "count": "{count, plural, one {# вопрос} few {# вопроса} many {# вопросов} other {# вопроса}}",
     "answer": "Ответ",
     "category": "Категория",
-    "category_count_label": "Категорий",
+    "category_count": "{count, plural, one {# категория} few {# категории} many {# категорий} other {# категории}}",
     "display_order": "Порядок",
-    "active": "Статус",
+    "active": "Активен",
     "uncategorized": "Без категории",
     "no_faqs": "Вопросов нет.",
-    "no_categories": "Категории не найдены.",
     "settings": {
-      "title": "Предпочтения",
+      "title": "Настройки",
       "display_location": "Место отображения",
       "display_location_desc": "Где должна отображаться ссылка и контент FAQ?",
-      "location_theme_page": "Страница темы (Ссылка в меню)",
+      "location_theme_page": "Страница темы (ссылка в меню)",
       "location_support_page": "Страница поддержки",
-      "location_both": "Оба",
       "show_search": "Показать строку поиска",
       "show_search_desc": "Должна ли строка поиска отображаться над списком FAQ?",
       "question_limit": "Установить лимит вопросов",
@@ -38,23 +33,18 @@
       "saved": "Настройки успешно сохранены."
     },
     "category_modal": {
-      "title": "Менеджер категорий",
       "name": "Название",
       "order": "Порядок отображения"
     },
     "delete_modal": {
-      "title": "Удалить вопрос",
       "description": "Вы уверены, что хотите удалить этот вопрос?",
       "confirm": "Удалить",
-      "cancel": "Отмена",
-      "deleting": "Удаление..."
+      "cancel": "Отмена"
     },
     "delete_category_modal": {
-      "title": "Удалить категорию",
       "description": "Вы уверены, что хотите удалить эту категорию? Вопросы в этой категории станут 'Без категории'.",
       "confirm": "Удалить",
-      "cancel": "Отмена",
-      "deleting": "Удаление..."
+      "cancel": "Отмена"
     },
     "toasts": {
       "faq_added": "Вопрос успешно добавлен.",
@@ -81,9 +71,6 @@
     "UPDATED_FAQ_SETTINGS": "<b>{username}</b> обновил настройки FAQ."
   },
   "save": "Сохранить",
-  "cancel": "Отмена",
-  "saved": "Успешно сохранено.",
-  "deleted": "Успешно удалено.",
   "error": "Произошла ошибка.",
   "yes": "Да",
   "no": "Нет",
@@ -92,9 +79,14 @@
     "fields_required": "Пожалуйста, заполните все обязательные поля."
   },
   "all": "Все",
-  "active": "Активные",
-  "inactive": "Неактивные",
   "buttons": {
     "close": "Закрыть"
+  },
+  "filters": {
+    "active": "Активные",
+    "inactive": "Неактивные"
+  },
+  "fields": {
+    "active": "Активен"
   }
 }

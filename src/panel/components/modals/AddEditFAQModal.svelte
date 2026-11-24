@@ -61,7 +61,7 @@
               class="form-check-input"
               id="active"
               bind:checked={$faq.active} />
-            <label class="form-check-label" for="active">{$_('active')}</label>
+            <label class="form-check-label" for="active">{$_('fields.active')}</label>
           </div>
         </div>
       </div>

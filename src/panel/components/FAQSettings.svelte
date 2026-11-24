@@ -8,6 +8,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="displayLocation">
           <span class="d-block">{$_('faq.settings.display_location')}</span>
+          <small>{$_('faq.settings.display_location_desc')}</small>
         </label>
         <div class="col-md-6 d-flex align-items-center">
           <select id="displayLocation" class="form-select" bind:value={config.displayLocation}>
@@ -21,6 +22,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showSearch">
           <span class="d-block">{$_('faq.settings.show_search')}</span>
+          <small>{$_('faq.settings.show_search_desc')}</small>
         </label>
         <div class="col-md-6 d-flex align-items-center">
           <div class="form-check form-switch">

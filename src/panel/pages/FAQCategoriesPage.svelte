@@ -20,7 +20,7 @@
   <div class="card">
     <CardHeader>
       <div slot="left">
-        {categoryCount} {$_('faq.category_count_label')}
+        {$_('faq.category_count', { values: { count: categoryCount } })}
       </div>
       <div slot="middle" style="width: 250px;">
         <div class="input-group">

@@ -1,65 +1,55 @@
 {
   "faq": {
-    "title": "S.S.S.",
-    "description": "Sıkça Sorulan Soruları oluşturun ve yönetin.",
+    "title": "SSS",
     "list": "Sorular",
     "categories": "Kategoriler",
     "search": "Soru ara...",
     "search_category": "Kategori ara...",
-    "add_faq": "S.S.S. Ekle",
+    "add_faq": "Soru ekle",
     "add_category": "Kategori Ekle",
-    "edit_faq": "S.S.S. Düzenle",
+    "edit_faq": "Soruyu düzenle",
     "edit_category": "Kategoriyi Düzenle",
-    "delete_faq": "Sil",
-    "delete_category": "Sil",
     "edit": "Düzenle",
     "delete": "Sil",
     "question": "Soru",
-    "count_label": "Soru",
+    "count": "{count} soru",
     "answer": "Cevap",
     "category": "Kategori",
-    "category_count_label": "Kategori",
+    "category_count": "{count} kategori",
     "display_order": "Sıra",
-    "active": "Durum",
+    "active": "Etkin",
     "uncategorized": "Kategorisiz",
-    "no_faqs": "S.S.S. yok.",
-    "no_categories": "Kategori bulunamadı.",
+    "no_faqs": "Henüz soru yok.",
     "settings": {
       "title": "Tercihler",
       "display_location": "Gösterim Konumu",
-      "display_location_desc": "S.S.S. bağlantısı ve içeriği nerede gösterilmeli?",
-      "location_theme_page": "Tema Sayfası (Navbar Linki)",
+      "display_location_desc": "SSS bağlantısı ve içeriği nerede gösterilsin?",
+      "location_theme_page": "Tema sayfası (menü bağlantısı)",
       "location_support_page": "Destek Sayfası",
-      "location_both": "Her İkisi",
       "show_search": "Arama Çubuğunu Göster",
-      "show_search_desc": "S.S.S. listesinin üzerinde arama çubuğu gösterilsin mi?",
+      "show_search_desc": "SSS listesinin üzerinde arama çubuğu gösterilsin mi?",
       "question_limit": "Soru Limitini Belirle",
       "question_limit_desc": "Gösterilecek maksimum soru sayısı. Sınırsız gösterim için 0 girin.",
       "saved": "Ayarlar başarıyla kaydedildi."
     },
     "category_modal": {
-      "title": "Kategori Yöneticisi",
       "name": "İsim",
       "order": "Gösterim Sırası"
     },
     "delete_modal": {
-      "title": "Soruyu Sil",
       "description": "Bu soruyu silmek istediğinize emin misiniz?",
       "confirm": "Sil",
-      "cancel": "İptal",
-      "deleting": "Siliniyor..."
+      "cancel": "İptal"
     },
     "delete_category_modal": {
-      "title": "Kategoriyi Sil",
       "description": "Bu kategoriyi silmek istediğinize emin misiniz? Bu kategorideki sorular kategorisiz olacaktır.",
       "confirm": "Sil",
-      "cancel": "İptal",
-      "deleting": "Siliniyor..."
+      "cancel": "İptal"
     },
     "toasts": {
-      "faq_added": "S.S.S. başarıyla eklendi.",
-      "faq_updated": "S.S.S. başarıyla güncellendi.",
-      "faq_deleted": "S.S.S. başarıyla silindi.",
+      "faq_added": "Soru başarıyla eklendi.",
+      "faq_updated": "Soru başarıyla güncellendi.",
+      "faq_deleted": "Soru başarıyla silindi.",
       "category_added": "Kategori başarıyla eklendi.",
       "category_updated": "Kategori başarıyla güncellendi.",
       "category_deleted": "Kategori başarıyla silindi."
@@ -67,23 +57,20 @@
   },
   "permissions": {
     "MANAGE_FAQ": {
-      "title": "S.S.S. Yönet",
-      "description": "S.S.S. girdilerini ve kategorilerini yönetmeye izin verir."
+      "title": "SSS yönetimi",
+      "description": "SSS sorularını ve kategorilerini yönetmeye izin verir."
     }
   },
   "activity-logs": {
-    "CREATED_FAQ": "<b>{username}</b> yeni bir S.S.S. oluşturdu: {target}.",
-    "UPDATED_FAQ": "<b>{username}</b> bir S.S.S. güncelledi: {target}.",
-    "DELETED_FAQ": "<b>{username}</b> bir S.S.S. sildi: {target}.",
-    "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir S.S.S. kategorisi oluşturdu: {target}.",
-    "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir S.S.S. kategorisini güncelledi: {target}.",
-    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir S.S.S. kategorisini sildi: {target}.",
-    "UPDATED_FAQ_SETTINGS": "<b>{username}</b> S.S.S. ayarlarını güncelledi."
+    "CREATED_FAQ": "<b>{username}</b> yeni bir SSS sorusu oluşturdu: {target}.",
+    "UPDATED_FAQ": "<b>{username}</b> bir SSS sorusunu güncelledi: {target}.",
+    "DELETED_FAQ": "<b>{username}</b> bir SSS sorusunu sildi: {target}.",
+    "CREATED_FAQ_CATEGORY": "<b>{username}</b> yeni bir SSS kategorisi oluşturdu: {target}.",
+    "UPDATED_FAQ_CATEGORY": "<b>{username}</b> bir SSS kategorisini güncelledi: {target}.",
+    "DELETED_FAQ_CATEGORY": "<b>{username}</b> bir SSS kategorisini sildi: {target}.",
+    "UPDATED_FAQ_SETTINGS": "<b>{username}</b> SSS ayarlarını güncelledi."
   },
   "save": "Kaydet",
-  "cancel": "İptal",
-  "saved": "Başarıyla kaydedildi.",
-  "deleted": "Başarıyla silindi.",
   "error": "Bir hata oluştu.",
   "yes": "Evet",
   "no": "Hayır",
@@ -92,9 +79,14 @@
     "fields_required": "Lütfen tüm zorunlu alanları doldurun."
   },
   "all": "Tümü",
-  "active": "Aktif",
-  "inactive": "Pasif",
   "buttons": {
     "close": "Kapat"
+  },
+  "filters": {
+    "active": "Etkin",
+    "inactive": "Devre dışı"
+  },
+  "fields": {
+    "active": "Etkin"
   }
 }
